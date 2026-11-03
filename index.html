@@ -158,6 +158,7 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
 #play:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .tbtns{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 #install{font-family:var(--font-b);font-weight:700;font-size:14px;padding:12px 16px;border-radius:8px;border:2px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+#fresh{align-self:flex-start;font-family:var(--font-b);font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--dim);cursor:pointer}
 #iosTip{margin:0;font-size:12px;color:var(--dim)}
 /* Landscape on phones: two columns on the title screen, tighter HUD so nothing overlaps */
 @media (orientation:landscape) and (max-height:560px){
@@ -198,6 +199,8 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
   <div id="zone"></div>
 </div>
 <div id="errbox" hidden role="alert"></div>
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 3 Nov b. Screenshot this for Claude.';d.hidden=false}
+window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
 <button id="book" hidden aria-label="Open notebook">✎ BOOK</button>
@@ -248,12 +251,13 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 3 Nov, tiled city</div>
+    <div class="tag">Kralnu Games presents · build 3 Nov b</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
     <p id="cloudNote" class="tag" style="text-transform:none;letter-spacing:0"></p>
     <div class="tbtns"><button id="play">Play</button><button id="install" hidden>⬇ Install app</button></div>
+    <button id="fresh" type="button">Get the latest version</button>
     <p id="iosTip" hidden>To install: tap Share, then Add to Home Screen.</p>
   </div>
 </div>
@@ -1554,7 +1558,7 @@ function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffe
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 3 Nov b. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
@@ -1572,6 +1576,8 @@ if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWor
   btn.addEventListener('click',async()=>{if(!ev)return;ev.prompt();try{await ev.userChoice}catch(_){}ev=null;btn.hidden=true});
   addEventListener('appinstalled',()=>{btn.hidden=true;tip.hidden=true});
   if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!installed())tip.hidden=false;
+  // Update button: clear the offline copy and load the newest build.
+  document.getElementById('fresh').addEventListener('click',async()=>{try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('mm-')).map(k=>caches.delete(k)))}}catch(_){}location.replace(location.pathname+'?v='+Date.now())});
   // Title: shrink the heading until it fits the screen, whatever font loads.
   const h=document.querySelector('#card h1');
   const fit=()=>{h.style.fontSize='';let f=parseFloat(getComputedStyle(h).fontSize),n=0;while(h.scrollWidth>h.clientWidth+1&&f>18&&n++<40){f-=1;h.style.fontSize=f+'px'}};
