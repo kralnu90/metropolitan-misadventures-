@@ -2,6 +2,10 @@
 
 A slapstick open-world crime and driving game for your phone. Nick cars, run jobs for five dodgy district contacts, build up safe houses and businesses, and take down Shifty Shaw.
 
+**Two cities.** Kingsgate is home. Take the car ferry or the toll road to **Lumen City**, a neon sprawl of nightclubs, glass towers and arcades, with its own districts, jobs and a motel to crash in. Your car, cash and progress come with you.
+
+**Daily courier run.** Swift & Shifty Couriers in Kingsgate have a parcel waiting in Lumen City every day. Collect it, bring it back, and get paid more for being quick and careful.
+
 **Play it:** https://kralnu90.github.io/metropolitan-misadventures-/
 
 Your progress saves in your browser on the device you play on.
