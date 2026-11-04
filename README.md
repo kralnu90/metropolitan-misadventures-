@@ -8,7 +8,7 @@ A slapstick open-world crime and driving game for your phone. Nick cars, run job
 
 **Daily courier run.** Swift & Shifty Couriers in Kingsgate have a parcel waiting in Lumen City every day. Collect it, bring it back, and get paid more for being quick and careful.
 
-**Play it:** https://kralnu90.github.io/metropolitan-misadventures-/
+**Play it:** https://kralnugames.com/metropolitan-misadventures-/
 
 Your progress saves in your browser on the device you play on.
 
