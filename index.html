@@ -209,7 +209,7 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 3 Nov d. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
@@ -261,7 +261,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 3 Nov d</div>
+    <div class="tag">Kralnu Games presents · build 7 Nov, calmer driving</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -495,6 +495,7 @@ const SPRAY=poi(1100*K,720*K,true);
 function roadPoint(){const e=pick(edges),p=e.pts[Math.floor(e.pts.length*rnd(.3,.7))];return{x:p[0],y:p[1]}}
 
 /* ---------- cars ---------- */
+const SPEED=0.75,TURNK=1.3; // overall pace and turning sharpness: lower SPEED = calmer game
 const SPECS={
   sedan:{w:30,h:16,acc:.11,brake:.28,max:5.0,turn:.055,hp:100,cruise:2.4},
   sport:{w:30,h:15,acc:.16,brake:.3,max:6.6,turn:.062,hp:80,cruise:2.8},
@@ -542,23 +543,23 @@ function carTiles(c){const ca=Math.cos(c.a),sa=Math.sin(c.a),off=c.spec.w*.28,r=
 /* ---------- driving ---------- */
 function driveCar(c,thr,steer,hb,f){c.brk=hb||(thr<0&&(c.fwd||0)>.4);const s=c.spec,ca=Math.cos(c.a),sa=Math.sin(c.a);
   let fwd=c.vx*ca+c.vy*sa,lat=-c.vx*sa+c.vy*ca;
-  if(thr>0)fwd+=s.acc*thr*f;else if(thr<0)fwd+=(fwd>.2?s.brake:s.acc*.7)*thr*f;else fwd*=Math.pow(.985,f);
+  if(thr>0)fwd+=s.acc*SPEED*thr*f;else if(thr<0)fwd+=(fwd>.2?s.brake*SPEED:s.acc*SPEED*.7)*thr*f;else fwd*=Math.pow(.985,f);
   fwd*=Math.pow(.995,f);if(hb)fwd*=Math.pow(.975,f);
   if(!c.driver)fwd*=Math.pow(.96,f);
-  fwd=clamp(fwd,-s.max*.45,s.max);
+  fwd=clamp(fwd,-s.max*SPEED*.45,s.max*SPEED);
   lat*=Math.pow(hb?.93:(s.grip||.7),f);
-  c.st=(c.st||0)+(steer-(c.st||0))*Math.min(1,(c===P.car?.13:.25)*f);
-  const spdF=1/(1+Math.max(0,Math.abs(fwd)-2)*.17);
-  c.a+=c.st*s.turn*f*clamp(fwd/2.5,-1,1)*spdF*(hb?1.5:1);
+  c.st=(c.st||0)+(steer-(c.st||0))*Math.min(1,(c===P.car?.075:.25)*f);
+  const spdF=1/(1+Math.max(0,Math.abs(fwd)-1.6)*.08);
+  c.a+=c.st*s.turn*TURNK*f*clamp(fwd/1.6,-1,1)*spdF*(hb?1.5:1);
   c.vx=ca*fwd-sa*lat;c.vy=sa*fwd+ca*lat;c.x+=c.vx*f;c.y+=c.vy*f;c.fwd=fwd;c.lat=lat;
 }
 function updTraffic(c,f,dt){
-  const s=c.spec;let target=s.cruise,guard=0;
+  const s=c.spec,cruise=s.cruise*SPEED;let target=cruise,guard=0;
   let tp=c.path[c.pi];
   while(dist(tp[0],tp[1],c.x,c.y)<18&&guard++<20){c.pi++;if(c.pi>=c.path.length){const o=nextEdge(c.node,c.edge);setPath(c,o.e,o.dir)}tp=c.path[c.pi]}
   const fx=Math.cos(c.a),fy=Math.sin(c.a);
   if(c.push<=0){
-    const chk=(ox,oy,rad)=>{const rx=ox-c.x,ry=oy-c.y,al=rx*fx+ry*fy;if(al<=0||al>72)return;if(Math.abs(rx*fy-ry*fx)<rad)target=Math.min(target,Math.max(0,(al-30)/40*s.cruise))};
+    const chk=(ox,oy,rad)=>{const rx=ox-c.x,ry=oy-c.y,al=rx*fx+ry*fy;if(al<=0||al>72)return;if(Math.abs(rx*fy-ry*fx)<rad)target=Math.min(target,Math.max(0,(al-30)/40*cruise))};
     for(const o of cars)if(o!==c&&!o.wreck&&(o.ai==='traffic'||o.ai==='cop'||o===P.car))chk(o.x,o.y,17);
     if(P.mode==='foot')chk(P.x,P.y,14);
     for(const p of peds)if(!p.down)chk(p.x,p.y,12);
@@ -873,7 +874,7 @@ function tRace(o){return{...o,
   targets(m){if(m.stage==='start')return[{...m.st,col:'#ffd23f',label:'START'}];const last=m.ci>=m.cps.length-1,c0=m.cps[Math.min(m.ci,m.cps.length-1)],out=[{...c0,col:last?'#9be27a':'#ffd23f',label:last?'FINISH':''}],c1=m.cps[m.ci+1];if(c1)out.push({...c1,col:'#8a7a3a',label:''});return out}}}
 function tTail(o){return{...o,
   start(){const s=laneSpawn(220,420)||laneSpawn(100,900),c=makeCar(o.vkind,s.x,s.y,s.a);c.col=o.col;c.ai='drive';c.driver=true;c.keep=true;let dest=null;for(let i=0;i<60;i++){const n=pick(nodes);if(dist(n.x,n.y,c.x,c.y)>1200){dest=n;break}}
-    c.dest=dest||pick(nodes);c.maxSp=o.speed||3.3;cars.push(c);toast(o.startLine[0],o.startLine[1]);return{stage:'tail',car:c,close:0,far:0,chasers:[c]}},
+    c.dest=dest||pick(nodes);c.maxSp=(o.speed||3.3)*SPEED;cars.push(c);toast(o.startLine[0],o.startLine[1]);return{stage:'tail',car:c,close:0,far:0,chasers:[c]}},
   tick(m,dt){const c=m.car;if(c.wreck){endJob('Target wrecked','That wasn\'t the plan',0);return}const d=dist(c.x,c.y,P.x,P.y);
     m.close=d<o.near?m.close+dt:Math.max(0,m.close-dt*.5);m.far=d>o.far?m.far+dt:0;
     if(m.close>2.2){endJob(o.spotted[0],o.spotted[1],0);return}if(m.far>6){endJob('Lost them',o.lostSub,0);return}
@@ -1139,7 +1140,7 @@ function combatTick(dt){const f=dt*60;P.punchCD-=dt;P.punchT-=dt;P.hurtT+=dt;if(
     if(p.angry>0){p.angry-=dt;if(P.mode!=='foot'){p.angry=0}const d=chaseStep(p,1.8,f);
       if(d<15){p.atkT-=dt;if(p.atkT<=0){p.atkT=1;hurt(4,pick(['SLAP!','BIFF!','OW!']))}}if(p.angry<=0&&p.path)p.pi=nearestIdx(p.path,p.x,p.y)}}
   // getting run over
-  if(P.mode==='foot')for(const c of cars){if(c.wreck)continue;const sp=speed(c);if(sp>3&&dist(c.x,c.y,P.x,P.y)<14&&P.hurtT>.6){const a=Math.atan2(P.y-c.y,P.x-c.x);P.x+=Math.cos(a)*16;P.y+=Math.sin(a)*16;hurt(Math.round(sp*5),'SPLAT!');thud(.5)}}
+  if(P.mode==='foot')for(const c of cars){if(c.wreck)continue;const sp=speed(c);if(sp>3*SPEED&&dist(c.x,c.y,P.x,P.y)<14&&P.hurtT>.6){const a=Math.atan2(P.y-c.y,P.x-c.x);P.x+=Math.cos(a)*16;P.y+=Math.sin(a)*16;hurt(Math.round(sp*5),'SPLAT!');thud(.5)}}
   for(let i=pops.length-1;i>=0;i--){pops[i].t+=dt;if(pops[i].t>.9)pops.splice(i,1)}}
 function drawPops(){ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#000';for(const q of pops){const k=q.t/.9;ctx.globalAlpha=1-k;ctx.font=`700 ${Math.round(11+6*(1-Math.abs(k-.15)*2>0?1-Math.abs(k-.15)*2:0))}px Bungee,Impact,sans-serif`;ctx.fillStyle=q.col;ctx.strokeText(q.txt,q.x,q.y-k*16);ctx.fillText(q.txt,q.x,q.y-k*16)}ctx.globalAlpha=1}
 
@@ -1361,8 +1362,8 @@ function update(dt){
     const mag=stickMag();
     if(stick.id!==null&&mag>.15){const want=Math.atan2(stick.dy,stick.dx),diff=angDiff(want,c.a);
       if(P.rev){if(Math.abs(diff)<1.3||c.fwd>1)P.rev=false}else if(Math.abs(diff)>2.5&&c.fwd<.8)P.rev=true;
-      if(!P.rev){thr=mag*(Math.abs(diff)>1.2?.5:1);steer=Math.abs(diff)<.04?0:clamp(diff*1.5,-1,1)}
-      else{const db=angDiff(want,c.a+Math.PI);thr=-mag*.7;steer=clamp(-db*1.5,-1,1)}
+      if(!P.rev){thr=mag*(Math.abs(diff)>1.2?.5:1);steer=Math.abs(diff)<.1?0:clamp(diff*.85,-1,1)}
+      else{const db=angDiff(want,c.a+Math.PI);thr=-mag*.7;steer=clamp(-db*.85,-1,1)}
       if(brakeHeld)hb=true;
     }else if(brakeHeld)thr=-1;
     driveCar(c,thr,steer,hb,f);P.x=c.x;P.y=c.y;
@@ -1378,7 +1379,7 @@ function update(dt){
     else if(c.ai==='racer')updRacer(c,f,dt);
     else if(c.ai==='raider')updRaider(c,f,dt);
     else driveCar(c,0,0,false,f);
-    if(c.ai!=='traffic'){const hit=carTiles(c);if(hit>2.2){c.hp-=(hit-2.2)*7;if(c===P.car)cam.shake=Math.max(cam.shake,hit*1.2)}}
+    if(c.ai!=='traffic'){const hit=carTiles(c);if(hit>2.2*SPEED){c.hp-=(hit-2.2*SPEED)*7/SPEED;if(c===P.car)cam.shake=Math.max(cam.shake,hit*1.2)}}
     if(c===P.car){P.x=c.x;P.y=c.y}
     const sp=speed(c);
     if((c===P.car||c.ai==='cop')&&(Math.abs(c.lat)>1.5||(c===P.car&&keys.Space&&sp>2)||(c===P.car&&brakeHeld&&stick.id!==null&&sp>2))){
@@ -1393,8 +1394,8 @@ function update(dt){
     const rv=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;if(rv>=0)continue;
     const imp=-rv;a.vx-=nx*imp*.5;a.vy-=ny*imp*.5;b.vx+=nx*imp*.5;b.vy+=ny*imp*.5;
     const pc=a===P.car||b===P.car;
-    if(imp>1.6&&(pc||a.ai==='cop'||b.ai==='cop')){a.hp-=(imp-1.6)*7;b.hp-=(imp-1.6)*7;burst((a.x+b.x)/2,(a.y+b.y)/2,6,'#ffe08a',3,.3,2)}
-    if(pc){const o=a===P.car?b:a;if(imp>1.2&&o.ai==='traffic')o.ai='parked';if(imp>1.4&&o.kind==='cop'&&o.ai==='cop'&&copHitCD<=0){addHeat(1);copHitCD=2.5}cam.shake=Math.max(cam.shake,imp*1.5);if(imp>2.4)thud(Math.min(1,imp/6))}
+    if(imp>1.6*SPEED&&(pc||a.ai==='cop'||b.ai==='cop')){a.hp-=(imp-1.6*SPEED)*7/SPEED;b.hp-=(imp-1.6*SPEED)*7/SPEED;burst((a.x+b.x)/2,(a.y+b.y)/2,6,'#ffe08a',3,.3,2)}
+    if(pc){const o=a===P.car?b:a;if(imp>1.2*SPEED&&o.ai==='traffic')o.ai='parked';if(imp>1.4*SPEED&&o.kind==='cop'&&o.ai==='cop'&&copHitCD<=0){addHeat(1);copHitCD=2.5}cam.shake=Math.max(cam.shake,imp*1.5);if(imp>2.4*SPEED)thud(Math.min(1,imp/(6*SPEED)))}
   }
   if(P.car){P.x=P.car.x;P.y=P.car.y}
   copHitCD-=dt;
@@ -1840,7 +1841,7 @@ function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffe
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 3 Nov d. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
