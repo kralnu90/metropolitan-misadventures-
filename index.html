@@ -209,7 +209,7 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov b. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov c. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
@@ -261,7 +261,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 7 Nov b, slower cars</div>
+    <div class="tag">Kralnu Games presents · build 7 Nov c, tougher cars</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -495,7 +495,8 @@ const SPRAY=poi(1100*K,720*K,true);
 function roadPoint(){const e=pick(edges),p=e.pts[Math.floor(e.pts.length*rnd(.3,.7))];return{x:p[0],y:p[1]}}
 
 /* ---------- cars ---------- */
-const SPEED=0.64,TURNK=1.3; // overall pace and turning sharpness: lower SPEED = calmer game
+const SPEED=0.64,TURNK=1.3,TOUGH=0.45; // TOUGH: share of crash damage the car you drive takes (lower = tougher)
+const hurtCar=(c,n)=>{c.hp-=n*(c===P.car?TOUGH:1)}; // overall pace and turning sharpness: lower SPEED = calmer game
 const SPECS={
   sedan:{w:30,h:16,acc:.11,brake:.28,max:5.0,turn:.055,hp:100,cruise:2.4},
   sport:{w:30,h:15,acc:.16,brake:.3,max:6.6,turn:.062,hp:80,cruise:2.8},
@@ -971,9 +972,9 @@ const BIZ=[{id:'dvd',name:'Knock-off DVD Stall',cost:28000,lvl:3,inc:60,pos:edge
 const GARAGES=[{id:'g1',name:'Ironside Mod Garage',pos:edgeSide(1600,720,1)},{id:'g2',name:'Kingsgate Mod Garage',pos:edgeSide(1320,1380,0)}];
 const THREADS={id:'threads',name:'Threads of Hollow Market',pos:edgeSide(660,1600,1)};
 const JACKETS=[{n:'Gold',c:'#e8b23a',gnomes:10},{n:'Mustard',c:'#ffb347'},{n:'Cobalt',c:'#3b7dd8'},{n:'Pillar-box Red',c:'#d63a2f'},{n:'Racing Green',c:'#2f7d4f'},{n:'Hi-vis',c:'#d8f23a'},{n:'Shell-suit Purple',c:'#8e44ad'}];
-const UPS={e:{n:'Engine',cost:[7000,17500,42000]},g:{n:'Grip',cost:[5250,14000,31500]},a:{n:'Armour',cost:[6300,15750,35000]}};
+const UPS={e:{n:'Engine',cost:[7000,17500,42000]},g:{n:'Grip',cost:[5250,14000,31500]},a:{n:'Armour',cost:[6300,15750,35000,70000,140000],per:.45}};
 let owned={bedsit:true},garageSlots={},bizState={};P.col='#ffb347';
-function deriveSpec(c){const b=SPECS[c.kind],u=c.up||(c.up={e:0,g:0,a:0}),hpF=c.hp/c.spec.hp;c.spec={...b,max:b.max*(1+.08*u.e),acc:b.acc*(1+.12*u.e),grip:.7-.05*u.g,hp:Math.round(b.hp*(1+.35*u.a))};c.hp=Math.round(c.spec.hp*Math.min(1,hpF))}
+function deriveSpec(c){const b=SPECS[c.kind],u=c.up||(c.up={e:0,g:0,a:0}),hpF=c.hp/c.spec.hp;c.spec={...b,max:b.max*(1+.08*u.e),acc:b.acc*(1+.12*u.e),grip:.7-.05*u.g,hp:Math.round(b.hp*(1+(UPS.a.per)*u.a))};c.hp=Math.round(c.spec.hp*Math.min(1,hpF))}
 const SERVICES=[...SAFES.map(s=>({...s,type:'safe'})),...BIZ.map(s=>({...s,type:'biz'})),...GARAGES.map(s=>({...s,type:'garage'})),{...THREADS,type:'threads'}];
 SERVICES.forEach(s=>{s.snub=dist(s.pos.x,s.pos.y,P.x,P.y)<70});
 const $opts=document.getElementById('bOpts');
@@ -1003,7 +1004,7 @@ function serviceMenu(s){
   else if(s.type==='garage'){openMenu({col:'#5aa9ff',face:'⚙',name:s.name,role:'Mods and repairs',
     line:()=>P.car?`Lovely motor. What can we do for your ${P.car.kind}?`:'Bring a car in and we\'ll make it go faster. Or at least louder.',
     options:()=>{if(!P.car)return[];const c=P.car;if(!c.up)c.up={e:0,g:0,a:0};if(c.kind==='cop'||c.spec.max!==SPECS[c.kind].max*(1+.08*c.up.e))deriveSpec(c);
-      const o=Object.entries(UPS).map(([k,u])=>{const lv=c.up[k],cost=u.cost[lv];return{label:`${u.n} ${'●'.repeat(lv)}${'○'.repeat(3-lv)}`,note:lv>=3?'Maxed out':`${money(cost)}`+(cash<cost?' · not enough cash':''),off:lv>=3||cash<cost,act(){cash-=cost;c.up[k]++;deriveSpec(c);if(k==='a')c.hp=c.spec.hp;toast(`${u.n} upgraded`,`Level ${c.up[k]}`)}}});
+      const o=Object.entries(UPS).map(([k,u])=>{const lv=c.up[k],mx=u.cost.length,cost=u.cost[lv];const extra=k==='a'?` · body ${Math.round(c.spec.hp)}→${Math.round(SPECS[c.kind].hp*(1+u.per*Math.min(mx,lv+1)))}`:'';return{label:`${u.n} ${'●'.repeat(lv)}${'○'.repeat(mx-lv)}`,note:lv>=mx?'Maxed out':`${money(cost)}`+(cash<cost?' · not enough cash':extra),off:lv>=mx||cash<cost,act(){cash-=cost;c.up[k]++;deriveSpec(c);if(k==='a')c.hp=c.spec.hp;toast(`${u.n} upgraded`,`Level ${c.up[k]}`)}}});
       o.push({label:'Repair and wash',note:c.hp>=c.spec.hp?'Already spotless':'$525',off:c.hp>=c.spec.hp||cash<525,act(){cash-=525;c.hp=c.spec.hp;toast('Good as new','')}});return o}})}
   else if(s.type==='threads'){openMenu({col:'#e07a5f',face:'👕',name:s.name,role:'Fine clothing, some of it legal',
     line:()=>'New jacket? Every one is $875, and every one is a crime against fashion.',
@@ -1379,7 +1380,7 @@ function update(dt){
     else if(c.ai==='racer')updRacer(c,f,dt);
     else if(c.ai==='raider')updRaider(c,f,dt);
     else driveCar(c,0,0,false,f);
-    if(c.ai!=='traffic'){const hit=carTiles(c);if(hit>2.2*SPEED){c.hp-=(hit-2.2*SPEED)*7/SPEED;if(c===P.car)cam.shake=Math.max(cam.shake,hit*1.2)}}
+    if(c.ai!=='traffic'){const hit=carTiles(c);if(hit>2.2*SPEED){hurtCar(c,(hit-2.2*SPEED)*7/SPEED);if(c===P.car)cam.shake=Math.max(cam.shake,hit*1.2)}}
     if(c===P.car){P.x=c.x;P.y=c.y}
     const sp=speed(c);
     if((c===P.car||c.ai==='cop')&&(Math.abs(c.lat)>1.5||(c===P.car&&keys.Space&&sp>2)||(c===P.car&&brakeHeld&&stick.id!==null&&sp>2))){
@@ -1394,7 +1395,7 @@ function update(dt){
     const rv=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;if(rv>=0)continue;
     const imp=-rv;a.vx-=nx*imp*.5;a.vy-=ny*imp*.5;b.vx+=nx*imp*.5;b.vy+=ny*imp*.5;
     const pc=a===P.car||b===P.car;
-    if(imp>1.6*SPEED&&(pc||a.ai==='cop'||b.ai==='cop')){a.hp-=(imp-1.6*SPEED)*7/SPEED;b.hp-=(imp-1.6*SPEED)*7/SPEED;burst((a.x+b.x)/2,(a.y+b.y)/2,6,'#ffe08a',3,.3,2)}
+    if(imp>1.6*SPEED&&(pc||a.ai==='cop'||b.ai==='cop')){hurtCar(a,(imp-1.6*SPEED)*7/SPEED);hurtCar(b,(imp-1.6*SPEED)*7/SPEED);burst((a.x+b.x)/2,(a.y+b.y)/2,6,'#ffe08a',3,.3,2)}
     if(pc){const o=a===P.car?b:a;if(imp>1.2*SPEED&&o.ai==='traffic')o.ai='parked';if(imp>1.4*SPEED&&o.kind==='cop'&&o.ai==='cop'&&copHitCD<=0){addHeat(1);copHitCD=2.5}cam.shake=Math.max(cam.shake,imp*1.5);if(imp>2.4*SPEED)thud(Math.min(1,imp/(6*SPEED)))}
   }
   if(P.car){P.x=P.car.x;P.y=P.car.y}
@@ -1841,7 +1842,7 @@ function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffe
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov b. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov c. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
