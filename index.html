@@ -209,7 +209,7 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov c. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov d. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
@@ -261,7 +261,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 7 Nov c, tougher cars</div>
+    <div class="tag">Kralnu Games presents · build 7 Nov d, escapable cops</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -501,7 +501,7 @@ const SPECS={
   sedan:{w:30,h:16,acc:.11,brake:.28,max:5.0,turn:.055,hp:100,cruise:2.4},
   sport:{w:30,h:15,acc:.16,brake:.3,max:6.6,turn:.062,hp:80,cruise:2.8},
   van:{w:36,h:18,acc:.085,brake:.24,max:4.3,turn:.045,hp:150,cruise:2.0},
-  cop:{w:32,h:16,acc:.15,brake:.3,max:6.3,turn:.06,hp:140,cruise:2.6},
+  cop:{w:32,h:16,acc:.13,brake:.3,max:5.0,turn:.06,hp:140,cruise:2.6},
 };
 const CAR_COLS=['#d9d4c7','#c0392b','#2e6db4','#e0a526','#3d8b5a','#7a4fa0','#2b2b2e','#e07a3c','#5fa8a8','#b8bec6'];
 const PED_COLS=['#e07a5f','#3d5a80','#81b29a','#f2cc8f','#9b5de5','#ef476f','#06d6a0','#cfd2cd'];
@@ -581,7 +581,17 @@ function buildRoute(c,tx,ty){const sn=nearestNode(c.x,c.y,true),tn=nearestNode(t
   for(const s of routeSteps(sn,tn)){const P2=edges[s.e].pts;if(s.dir===0)for(const p of P2)pts.push(p);else for(let i=P2.length-1;i>=0;i--)pts.push(P2[i])}
   pts.push([tx,ty]);return pts}
 function shout(c){c.shoutT=(c.shoutT??rnd(.5,2))-1/60;c.shoutL=(c.shoutL||0)-1/60;if(c.shoutT<=0&&dist(c.x,c.y,P.x,P.y)<300){c.shout=pick(c.ai==='cop'?COP_SHOUTS:(c.shouts||CHASE_SHOUTS));c.shoutT=rnd(2.5,5);c.shoutL=1.5}}
-function updCop(c,f,dt){shout(c);const tg=P.mode==='car'?P.car:P;pursue(c,f,dt,tg.x+(tg.vx||0)*10,tg.y+(tg.vy||0)*10,{stop:P.mode==='foot'})}
+const COP_SIGHT=420,LKP={x:0,y:0,t:-1e9},PHIST=[];let copsSee=false,copsSaw=false;
+function copCanSee(c){const tg=P.mode==='car'?P.car:P;return dist(c.x,c.y,tg.x,tg.y)<COP_SIGHT&&los(c.x,c.y,tg.x,tg.y)}
+function updCop(c,f,dt){shout(c);const tg=P.mode==='car'?P.car:P;
+  c.seeT=(c.seeT||0)-dt;if(c.seeT<=0){c.seeT=.25;c.sees=copCanSee(c);if(c.sees){LKP.x=tg.x;LKP.y=tg.y;LKP.t=performance.now()}}
+  if(c.sees||c.ai!=='cop'&&dist(c.x,c.y,tg.x,tg.y)<COP_SIGHT){
+    const lag=PHIST.length>20?PHIST[PHIST.length-20]:tg;c.search=null;pursue(c,f,dt,lag.x,lag.y,{stop:P.mode==='foot'});return}
+  if(c.ai!=='cop'){pursue(c,f,dt,LKP.t>0?LKP.x:tg.x,LKP.t>0?LKP.y:tg.y,{});return}
+  if(!c.search||dist(c.x,c.y,c.search.x,c.search.y)<80){
+    if(c.chk!==LKP.t&&LKP.t>0){c.chk=LKP.t;c.search={x:LKP.x,y:LKP.y}}
+    else{const near=nodes.filter(n=>dist(n.x,n.y,LKP.x,LKP.y)<650);const n=near.length?pick(near):pick(nodes);c.search={x:n.x,y:n.y}}c.wpT=0}
+  pursue(c,f,dt,c.search.x,c.search.y,{maxSp:c.spec.max*SPEED*.7})}
 function updFlee(c,f,dt){shout(c);c.goalT=(c.goalT||0)-dt;if(!c.goal||c.goalT<=0||dist(c.x,c.y,c.goal.x,c.goal.y)<90){const far=nodes.filter(n=>dist(n.x,n.y,P.x,P.y)>700&&dist(n.x,n.y,c.x,c.y)>250);c.goal=pick(far.length?far:nodes);c.goalT=14;c.wpT=0}pursue(c,f,dt,c.goal.x,c.goal.y,{})}
 function updDrive(c,f,dt){const d=dist(c.x,c.y,c.dest.x,c.dest.y);if(d<60){driveCar(c,c.fwd>.3?-1:0,0,false,f);return}pursue(c,f,dt,c.dest.x,c.dest.y,{maxSp:c.maxSp})}
 function updRacer(c,f,dt){shout(c);if(c.hold||c.ci>=c.cps.length){driveCar(c,c.fwd>.3?-1:0,0,true,f);return}const t=c.cps[c.ci];if(dist(c.x,c.y,t.x,t.y)<58){c.ci++;c.wpT=0;if(c.ci>=c.cps.length)return}const n=c.cps[c.ci];pursue(c,f,dt,n.x,n.y,{})}
@@ -643,7 +653,7 @@ function exitCar(){const c=P.car;let placed=false;
   if(!placed){P.x=c.x;P.y=c.y}
   c.ai='parked';c.driver=false;P.mode='foot';P.car=null;P.vx=P.vy=0;
 }
-function addHeat(v){heat=Math.min(5.99,heat+v);heatQuiet=0}
+function addHeat(v){heat=Math.min(5.99,heat+v);heatQuiet=0;if(typeof LKP!=='undefined'){LKP.x=P.car?P.car.x:P.x;LKP.y=P.car?P.car.y:P.y;LKP.t=performance.now()}}
 const stars=()=>Math.floor(heat);
 function nearestIdx(path,x,y){let b=0,bd=1e9;path.forEach((p,i)=>{const d=dist(p[0],p[1],x,y);if(d<bd){bd=d;b=i}});return b}
 
@@ -1132,7 +1142,7 @@ function chaseStep(p,sp,f){const dx=P.x-p.x,dy=P.y-p.y,d=Math.hypot(dx,dy)||1;if
 function combatTick(dt){const f=dt*60;P.punchCD-=dt;P.punchT-=dt;P.hurtT+=dt;if(P.hurtT>5&&P.hp<100)P.hp=Math.min(100,P.hp+dt*4);
   // bobbies jump out when you're on foot and they've caught up
   if(stars()>0&&P.mode==='foot')for(const c of cars){if(c.ai!=='cop'||c.wreck||!c.driver||c.dumped)continue;if(dist(c.x,c.y,P.x,P.y)<150&&speed(c)<1.6){c.dumped=true;c.ai='parked';c.driver=false;
-    for(let i=0;i<(stars()>=3?2:1);i++){const s=i?-1:1,x=c.x+Math.cos(c.a+s*Math.PI/2)*18,y=c.y+Math.sin(c.a+s*Math.PI/2)*18;peds.push({x,y,a:0,sp:2.15,col:'#1d3557',cop:true,hp:3,flee:0,fx:0,fy:0,down:0,vx:0,vy:0,ph:0,atkT:.8,path:[[x,y]],pi:0,edge:0,node:0,side:0,dir:0})}
+    for(let i=0;i<(stars()>=3?2:1);i++){const s=i?-1:1,x=c.x+Math.cos(c.a+s*Math.PI/2)*18,y=c.y+Math.sin(c.a+s*Math.PI/2)*18;peds.push({x,y,a:0,sp:1.75,col:'#1d3557',cop:true,hp:3,flee:0,fx:0,fy:0,down:0,vx:0,vy:0,ph:0,atkT:.8,path:[[x,y]],pi:0,edge:0,node:0,side:0,dir:0})}
     pop(c.x,c.y-18,pick(['\'ELLO \'ELLO!','STOP RIGHT THERE!','YOU\'RE NICKED!']),'#9fd0ff')}}
   for(let i=peds.length-1;i>=0;i--){const p=peds[i];if(p.down)continue;
     if(p.cop){if(stars()===0||p.flee>0){p.flee=Math.max(p.flee,1);const dx=p.x-P.x,dy=p.y-P.y,d=Math.hypot(dx,dy)||1;p.x+=dx/d*1.6*f;p.y+=dy/d*1.6*f;p.a=Math.atan2(dy,dx);if(d>700)peds.splice(i,1);continue}
@@ -1424,14 +1434,16 @@ function update(dt){
   for(let i=cars.length-1;i>=0;i--){const c=cars[i];if(c===P.car)continue;const d=dist(c.x,c.y,P.x,P.y);
     if(c.keep)continue;if(d>1450||(c.ai!=='cop'&&c.ai!=='traffic'&&d>900&&(c.wreck>20||c.kind==='cop')))cars.splice(i,1)}
   const st=stars(),want=[0,1,3,4,6,8][st];copSpawnT-=dt;
-  if(st>0&&cars.filter(c=>c.ai==='cop').length<want&&copSpawnT<=0){spawnCop();copSpawnT=1.4}
-  if(st>0){const seen=cars.some(c=>c.ai==='cop'&&dist(c.x,c.y,P.x,P.y)<420&&los(c.x,c.y,P.x,P.y));
+  PHIST.push({x:P.car?P.car.x:P.x,y:P.car?P.car.y:P.y});if(PHIST.length>40)PHIST.shift();
+  if(st>0&&cars.filter(c=>c.ai==='cop').length<want&&copSpawnT<=0){const hot=copsSee||heatQuiet<4;copSpawnT=hot?2.6:6;if(hot)spawnCop()}
+  if(st>0){const seen=cars.some(c=>c.ai==='cop'&&!c.wreck&&c.sees);copsSee=seen;
+    if(copsSaw&&!seen)toast('Out of sight','Stay hidden and they\'ll give up');copsSaw=seen;
     if(seen)heatQuiet=0;else heatQuiet+=dt;
-    if(heatQuiet>(found.length>=50?6:9)){heat=Math.max(0,st-1);heatQuiet=0;toast(heat<1?'Lost them':'Losing them')}
+    if(heatQuiet>(found.length>=50?4.5:7)){heat=Math.max(0,st-1);heatQuiet=0;toast(heat<1?'Lost them':'Losing them')}
     const near=cars.some(c=>c.ai==='cop'&&dist(c.x,c.y,P.x,P.y)<(P.mode==='foot'?50:44))||(P.mode==='foot'&&peds.some(p=>p.cop&&!p.down&&dist(p.x,p.y,P.x,P.y)<20));
     if(near&&(P.mode==='foot'||speed(P.car)<.6))bustT+=dt*(P.mode==='foot'?1:.6);else bustT=Math.max(0,bustT-dt);
     if(bustT>1.4)busted();
-  }else bustT=0;
+  }else{bustT=0;copsSee=copsSaw=false}
   sprayCD-=dt;
   if(P.car&&sprayCD<=0&&dist(P.x,P.y,SPRAY.x,SPRAY.y)<34){
     if(heat>=1||P.car.hp<P.car.spec.hp){if(cash>=875){stat('spray');cash-=875;heat=0;P.car.hp=P.car.spec.hp;if(P.car.kind!=='cop')P.car.col=pick(CAR_COLS.filter(x=>x!==P.car.col));toast('Fresh paint','−$875 · heat cleared')}else toast('Respray is $875','Come back with cash')}
@@ -1587,6 +1599,7 @@ function render(t){
   for(const e of events)dot(e.x,e.y,'#ff9f1c',3,true);
   if(!mission)for(const ct of CONTACTS)if((story[ct.id]||0)<ct.chain.length){const lk=level()<(ct.lvl||1)||(ct.req&&!ct.req());dot(ct.pos.x,ct.pos.y,lk?'#777':ct.col,3,!lk)}
   for(const q of tl){const p=mp(q.x,q.y,true);mini.fillStyle=q.col;mini.strokeStyle='#000';mini.lineWidth=1;mini.beginPath();mini.arc(p[0],p[1],q===tgt?3.6:2.4,0,7);mini.fill();mini.stroke()}
+  if(stars()>0&&!copsSee&&LKP.t>0){const q=mp(LKP.x,LKP.y);if(q){mini.strokeStyle='rgba(255,93,115,.7)';mini.setLineDash([3,3]);mini.lineWidth=1.2;mini.beginPath();mini.arc(q[0],q[1],Math.max(6,600*ms),0,7);mini.stroke();mini.setLineDash([])}}
   for(const c of cars)if(c.ai==='cop')sq(c.x,c.y,Math.floor(t*6)%2?'#ff3b4f':'#5aa9ff',1.6);
   {const p=mp(P.x,P.y,true),ha=P.car?P.car.a:P.a||0;mini.save();mini.translate(p[0],p[1]);mini.rotate(ha);mini.fillStyle='#fff';mini.strokeStyle='#ffb347';mini.lineWidth=1.5;mini.beginPath();mini.moveTo(6,0);mini.lineTo(-4,-4);mini.lineTo(-2,0);mini.lineTo(-4,4);mini.closePath();mini.fill();mini.stroke();mini.restore()}
   mini.fillStyle='rgba(0,0,0,.55)';mini.fillRect(0,MS-13,MS,13);mini.fillStyle='#f1e8d6';mini.font='700 8px "Chivo Mono",monospace';mini.textAlign='center';mini.fillText(miniFull?'CITY MAP · TAP TO ZOOM':'TAP FOR CITY MAP',MS/2,MS-4);
@@ -1842,7 +1855,7 @@ function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffe
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov c. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov d. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
