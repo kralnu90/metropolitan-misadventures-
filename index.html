@@ -209,7 +209,7 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov b. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
@@ -261,7 +261,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 7 Nov, calmer driving</div>
+    <div class="tag">Kralnu Games presents · build 7 Nov b, slower cars</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -495,7 +495,7 @@ const SPRAY=poi(1100*K,720*K,true);
 function roadPoint(){const e=pick(edges),p=e.pts[Math.floor(e.pts.length*rnd(.3,.7))];return{x:p[0],y:p[1]}}
 
 /* ---------- cars ---------- */
-const SPEED=0.75,TURNK=1.3; // overall pace and turning sharpness: lower SPEED = calmer game
+const SPEED=0.64,TURNK=1.3; // overall pace and turning sharpness: lower SPEED = calmer game
 const SPECS={
   sedan:{w:30,h:16,acc:.11,brake:.28,max:5.0,turn:.055,hp:100,cruise:2.4},
   sport:{w:30,h:15,acc:.16,brake:.3,max:6.6,turn:.062,hp:80,cruise:2.8},
@@ -1841,7 +1841,7 @@ function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffe
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov b. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
