@@ -145,6 +145,31 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
 .cz-msg{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;transition:.25s;background:#140509;border:2px solid #f2c14e;color:#f6e7c1;padding:10px 16px;border-radius:12px;font-family:var(--font-d);font-size:15px;text-align:center;max-width:88vw;pointer-events:none;z-index:40}
 .cz-msg.show{opacity:1;transform:translate(-50%,0)}.cz-msg.good{border-color:var(--cash);color:var(--cash)}.cz-msg.bad{border-color:#7a5a5a;color:#d9b97a}.cz-msg.big{border-color:#ffd23f;color:#ffd23f;box-shadow:0 0 30px rgba(255,210,63,.5)}
 #errbox{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(200px + env(safe-area-inset-bottom,0px));z-index:50;background:#3a0d14;border:2px solid var(--danger);color:#ffd9de;font-size:12px;line-height:1.4;padding:10px 12px;border-radius:8px}
+#menuBtn{position:fixed;right:calc(144px + env(safe-area-inset-right,0px));top:calc(80px + env(safe-area-inset-top,0px));font-family:var(--font-b);font-weight:700;font-size:11px;padding:6px 9px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:var(--panel);color:var(--ink);cursor:pointer}
+#pause{position:fixed;inset:0;z-index:28;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:rgba(6,7,12,.6);overflow-y:auto;padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.pcard2{box-sizing:border-box;width:100%;max-width:440px;margin:auto;background:#17191f;border:2px solid var(--accent);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 0 rgba(0,0,0,.4)}
+.p-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.p-head h2{margin:0;font-family:var(--font-d);font-weight:400;font-size:26px;color:var(--accent)}
+.p-head span{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
+.p-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.p-btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;text-decoration:none;font-family:var(--font-b);padding:11px 12px;border-radius:9px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:var(--ink);cursor:pointer;min-width:0}
+.p-btn b{font-size:14px}.p-btn small{font-size:11px;color:var(--dim);line-height:1.3}
+.p-btn.pri{background:var(--accent);border-color:var(--accent);color:#1a1206;align-items:center;text-align:center}.p-btn.pri small{color:#4a3410}
+.p-btn.kofi{border-color:#6b4a2a;background:linear-gradient(135deg,#2c2117,rgba(255,255,255,.04) 75%)}
+.p-btn.small{flex-direction:row;justify-content:space-between;align-items:center;padding:8px 12px}.p-btn.small b{font-size:12px}
+.p-btn:disabled{opacity:.5;cursor:default}
+.p-btn:focus-visible,.p-mini:focus-visible,.p-star:focus-visible,#menuBtn:focus-visible{outline:3px solid #fff3c4;outline-offset:2px}
+.p-sec{font-family:var(--font-d);font-size:11px;letter-spacing:.08em;color:var(--accent);margin-top:4px}
+.p-contact{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--dim);flex-wrap:wrap}
+.p-contact b{color:var(--ink);user-select:text;-webkit-user-select:text}
+.p-mini{font-family:var(--font-b);font-weight:700;font-size:11px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--ink);cursor:pointer}
+.p-credit{margin:2px 0 0;font-size:10.5px;line-height:1.5;color:var(--dim);text-align:center}
+.p-blurb{margin:0;font-size:12px;line-height:1.5;color:var(--dim)}.p-blurb a{color:var(--accent)}
+.p-stars{display:flex;gap:6px}
+.p-star{font-size:30px;line-height:1;background:none;border:0;padding:2px;color:rgba(255,255,255,.2);cursor:pointer}.p-star.on{color:#ffd23f}
+#pause textarea,#pause input{box-sizing:border-box;width:100%;font-family:var(--font-b);font-size:14px;padding:9px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:#0f1116;color:var(--ink);user-select:text;-webkit-user-select:text}
+#pause textarea{min-height:64px;resize:vertical}
+.t-credit{margin:0;font-size:11px;color:var(--dim)}
 #title{position:fixed;inset:0;display:flex;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));background:radial-gradient(ellipse at 50% 40%,rgba(18,20,26,.55),rgba(10,11,15,.94));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 #card{margin:auto;width:100%;max-width:380px;min-width:0;display:flex;flex-direction:column;gap:14px}
 #card h1 small{display:block;font-family:var(--font-b);font-size:.32em;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-shadow:0 2px 0 #000;margin-top:8px}
@@ -170,7 +195,7 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
   #cloudNote{grid-area:cloud}
   .tbtns{grid-area:btns;align-self:end}
   #mini{width:100px;height:100px}
-  #snd,#book{right:calc(122px + env(safe-area-inset-right,0px))}
+  #snd,#book,#menuBtn{right:calc(122px + env(safe-area-inset-right,0px))}
   #zone{top:calc(120px + env(safe-area-inset-top,0px));font-size:16px}
   #btnE{width:72px;height:72px;bottom:calc(18px + env(safe-area-inset-bottom,0px))}
   #btnB{width:62px;height:62px;right:calc(104px + env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px))}
@@ -209,11 +234,13 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 7 Nov d. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 9 Nov. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
 <button id="book" hidden aria-label="Open notebook">✎ BOOK</button>
+<button id="menuBtn" hidden aria-label="Pause and open the menu">☰ MENU</button>
+<div id="pause" hidden role="dialog" aria-modal="true" aria-label="Pause menu"><div class="pcard2" id="pBody"></div></div>
 <div id="brief" hidden><div class="bcard">
   <div class="who"><div class="face" id="bFace">DR</div><div><div id="bName"></div><div id="bRole"></div></div></div>
   <div id="bMis"></div><p id="bLine"></p>
@@ -261,10 +288,11 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 7 Nov d, escapable cops</div>
+    <div class="tag">Kralnu Games presents · build 9 Nov, pause menu</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
+    <p class="t-credit">Ideas, design and testing by Kris. Built with Claude, an AI by Anthropic.</p>
     <p id="cloudNote" class="tag" style="text-transform:none;letter-spacing:0"></p>
     <div class="tbtns"><button id="play">Play</button><button id="install" hidden>⬇ Install app</button></div>
     <button id="fresh" type="button">Get the latest version</button>
@@ -1823,6 +1851,74 @@ async function cloudPush(){if(!cloudDoc||!cloudDirty)return;cloudDirty=false;try
 setInterval(cloudPush,20000);
 addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();cloudPush()}});
 
+/* ================= pause menu: review, support, contact, credits ================= */
+const GAME_VERSION='build 9 Nov',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
+const FORM_ID='1FAIpQLSe__mPhU5YGi9um01BreqNND9mJwaaChi_4ZCp-7P5JcCJKcw';
+const FORM_FIELDS={rating:'entry.1904387170',liked:'entry.2084220988',change:'entry.1413261780',name:'entry.1767709403',version:'entry.1994593489'};
+function reviewParams(r){const q=new URLSearchParams();q.set(FORM_FIELDS.rating,String(r.rating));q.set(FORM_FIELDS.liked,r.liked);q.set(FORM_FIELDS.change,r.change);q.set(FORM_FIELDS.name,r.name);q.set(FORM_FIELDS.version,'Metropolitan Misadventure '+GAME_VERSION);return q}
+const reviewFormUrl=r=>`https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${reviewParams(r).toString()}`;
+const $pause=document.getElementById('pause'),$pbody=document.getElementById('pBody');
+const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let pausedByMenu=false;
+function openPause(){if(!started||paused||!$cz.hidden)return;paused=true;pausedByMenu=true;stick.id=null;stick.dx=stick.dy=0;stickEl.hidden=true;brakeHeld=false;for(const k in keys)keys[k]=false;pauseHome();$pause.hidden=false;setTimeout(()=>{const b=document.getElementById('pResume');b&&b.focus()},0)}
+function closePause(){$pause.hidden=true;if(pausedByMenu){paused=false;pausedByMenu=false}save()}
+function pauseHome(){
+  $pbody.innerHTML=`<div class="p-head"><h2>Paused</h2><span>Day ${day} · ${clockStr()} · LVL ${level()}</span></div>
+    <button class="p-btn pri" id="pResume"><b>Resume</b><small>Back to the streets</small></button>
+    <div class="p-grid">
+      <button class="p-btn" id="pBook"><b>✎ Notebook</b><small>Challenges and records</small></button>
+      <button class="p-btn" id="pSnd"><b>♪ Sound ${muted?'off':'on'}</b><small>Tap to turn ${muted?'on':'off'}</small></button>
+      <button class="p-btn" id="pMap"><b>City map</b><small>${miniFull?'Showing whole city':'Showing radar'}</small></button>
+      <button class="p-btn" id="pReview"><b>★ Leave a review</b><small>Goes straight to Kris</small></button>
+    </div>
+    <div class="p-sec">Kralnu Games</div>
+    <div class="p-grid">
+      <a class="p-btn kofi" href="${KOFI}" target="_blank" rel="noopener"><b>☕ Support the game</b><small>Optional, on Ko-fi. Unlocks nothing</small></a>
+      <a class="p-btn" href="https://kralnugames.com" target="_blank" rel="noopener"><b>More games</b><small>kralnugames.com</small></a>
+    </div>
+    <div class="p-contact"><span>Say hello: <b id="pMail">${CONTACT}</b></span><button class="p-mini" id="pCopy">Copy</button></div>
+    <button class="p-btn small" id="pFresh"><b>Get the latest version</b><small>Reloads with any new update</small></button>
+    <p class="p-credit">Ideas, design and testing by Kris. Built with Claude, an AI by Anthropic.<br>Metropolitan Misadventure · ${GAME_VERSION}</p>`;
+  document.getElementById('pResume').onclick=closePause;
+  document.getElementById('pBook').onclick=()=>{closePause();openNotebook()};
+  document.getElementById('pSnd').onclick=()=>{$snd.click();pauseHome()};
+  document.getElementById('pMap').onclick=()=>{miniFull=!miniFull;pauseHome()};
+  document.getElementById('pReview').onclick=pauseReview;
+  document.getElementById('pFresh').onclick=()=>{save();document.getElementById('fresh').click()};
+  document.getElementById('pCopy').onclick=()=>{const done=()=>{const b=document.getElementById('pCopy');if(b)b.textContent='Copied'};
+    try{navigator.clipboard.writeText(CONTACT).then(done,()=>{selMail()})}catch(_){selMail()}};
+}
+function selMail(){const el=document.getElementById('pMail');if(!el)return;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
+function pauseReview(){let stars=0,sending=false;
+  $pbody.innerHTML=`<div class="p-head"><h2>Leave a review</h2><button class="p-mini" id="pBack">Back</button></div>
+    <p class="p-blurb">Your review goes straight to Kris, the developer. Only the rating is needed.</p>
+    <div class="p-sec">Your rating</div>
+    <div class="p-stars" role="radiogroup" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button class="p-star" data-n="${n}" role="radio" aria-checked="false" aria-label="${n} star${n>1?'s':''}">★</button>`).join('')}</div>
+    <label class="p-sec" for="rvLiked">What did you enjoy?</label><textarea id="rvLiked" maxlength="800" placeholder="Optional"></textarea>
+    <label class="p-sec" for="rvChange">What should change or be fixed?</label><textarea id="rvChange" maxlength="800" placeholder="Optional"></textarea>
+    <label class="p-sec" for="rvName">Your name</label><input id="rvName" maxlength="30" placeholder="Optional" autocomplete="off">
+    <button class="p-btn pri" id="rvSend" disabled><b>Pick a rating to send</b></button>
+    <p class="p-blurb" id="rvMsg"></p>`;
+  try{document.getElementById('rvName').value=localStorage.getItem('mm-rv-name')||''}catch(_){}
+  document.getElementById('pBack').onclick=pauseHome;
+  $pbody.querySelectorAll('.p-star').forEach(x=>x.onclick=()=>{stars=+x.dataset.n;$pbody.querySelectorAll('.p-star').forEach(y=>{y.classList.toggle('on',+y.dataset.n<=stars);y.setAttribute('aria-checked',String(+y.dataset.n===stars))});
+    const s=document.getElementById('rvSend');s.disabled=false;s.innerHTML='<b>Send review</b>'});
+  document.getElementById('rvSend').onclick=()=>{if(sending||!stars)return;sending=true;
+    const r={rating:stars,liked:document.getElementById('rvLiked').value.trim(),change:document.getElementById('rvChange').value.trim(),name:document.getElementById('rvName').value.trim()};
+    try{localStorage.setItem('mm-rv-name',r.name)}catch(_){}
+    const s=document.getElementById('rvSend');s.disabled=true;s.innerHTML='<b>Sending…</b>';
+    fetch(`https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`,{method:'POST',mode:'no-cors',body:reviewParams(r)}).then(()=>{
+      $pbody.innerHTML=`<div class="p-head"><h2>Thank you!</h2></div><div class="p-stars">${[1,2,3,4,5].map(n=>`<span class="p-star${n<=stars?' on':''}">★</span>`).join('')}</div>
+        <p class="p-blurb">Your review is on its way to Kris. Every one gets read.</p><button class="p-btn pri" id="pDone"><b>Back to the menu</b></button>`;
+      document.getElementById('pDone').onclick=pauseHome;
+    }).catch(()=>{sending=false;s.disabled=false;s.innerHTML='<b>Try again</b>';
+      document.getElementById('rvMsg').innerHTML=`Couldn't send. Check you're online and try again, or <a href="${escH(reviewFormUrl(r))}" target="_blank" rel="noopener">open the review form</a> instead.`})};
+}
+document.getElementById('menuBtn').addEventListener('click',openPause);
+$pause.addEventListener('click',e=>{if(e.target===$pause)closePause()});
+addEventListener('keydown',e=>{if((e.code==='Escape'||e.code==='KeyP')&&started){if(!$pause.hidden){closePause();e.preventDefault()}else if(!paused){openPause();e.preventDefault()}}});
+addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&started&&!paused&&$cz.hidden)openPause()});
+
 /* ---------- boot ---------- */
 let ARRIVE=null;try{ARRIVE=JSON.parse(localStorage.getItem(ARR_KEY)||'null');localStorage.removeItem(ARR_KEY)}catch(_){}
 if(ARRIVE){const T=TRAVEL.find(x=>x.via===ARRIVE.via)||TRAVEL[0];T.snub=true;P.x=T.pos.x;P.y=T.pos.y;
@@ -1834,9 +1930,9 @@ for(let i=0;i<36;i++)spawnPed(60,900);
 {const e=edges[HOME.e],i=Math.min(e.pts.length-2,HOME.i+4),p=e.wp[HOME.side][0][i],q=e.wp[HOME.side][0][i+1],c=makeCar('sport',p[0],p[1],Math.atan2(q[1]-p[1],q[0]-p[0]));c.col='#c0392b';cars.push(c)}
 document.getElementById('ctrls').innerHTML=touch?
   '<dt>Drag</dt><dd>Walk, or point the car where you want to go</dd><dt>ENTER</dt><dd>Get in or out of a car</dd><dt>BRAKE</dt><dd>Brake and reverse; hold while steering to drift. On foot it becomes PUNCH</dd>':
-  '<dt>WASD / arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Get in or out of a car</dd><dt>Space</dt><dd>Handbrake, or punch on foot</dd><dt>N</dt><dd>Notebook</dd>';
-document.getElementById('play').addEventListener('click',()=>{initAudio();if(AC&&AC.state==='suspended')AC.resume();$snd.hidden=false;document.getElementById('book').hidden=false;started=true;if(daily.day!==day)genDaily();document.getElementById('title').hidden=true;if(touch){bE.hidden=false;bB.hidden=false}CITY.id!=='kg'?toast(CITY.name,'The ferry and the toll road go back to Kingsgate'):toast((story.del||0)?'Welcome back':'Find a ride',(story.del||0)<3?'Del Rossi wants a word. Purple marker':'There\'s a red one parked just up the road')});
-if(ARRIVE)setTimeout(()=>{started=true;document.getElementById('title').hidden=true;$snd.hidden=false;document.getElementById('book').hidden=false;if(touch){bE.hidden=false;bB.hidden=false}if(daily.day!==day)genDaily();
+  '<dt>WASD / arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Get in or out of a car</dd><dt>Space</dt><dd>Handbrake, or punch on foot</dd><dt>N</dt><dd>Notebook</dd><dt>Esc / P</dt><dd>Pause menu</dd>';
+document.getElementById('play').addEventListener('click',()=>{initAudio();if(AC&&AC.state==='suspended')AC.resume();$snd.hidden=false;document.getElementById('book').hidden=false;document.getElementById('menuBtn').hidden=false;started=true;if(daily.day!==day)genDaily();document.getElementById('title').hidden=true;if(touch){bE.hidden=false;bB.hidden=false}CITY.id!=='kg'?toast(CITY.name,'The ferry and the toll road go back to Kingsgate'):toast((story.del||0)?'Welcome back':'Find a ride',(story.del||0)<3?'Del Rossi wants a word. Purple marker':'There\'s a red one parked just up the road')});
+if(ARRIVE)setTimeout(()=>{started=true;document.getElementById('title').hidden=true;$snd.hidden=false;document.getElementById('book').hidden=false;document.getElementById('menuBtn').hidden=false;if(touch){bE.hidden=false;bB.hidden=false}if(daily.day!==day)genDaily();
   addEventListener('pointerdown',()=>{initAudio();if(AC&&AC.state==='suspended')AC.resume()},{once:true});save();
   setTimeout(()=>{document.documentElement.classList.remove('arriving');toast(CITY.name,runOn()?(run.stage==='return'?'Parcel on board. Get it to Swift & Shifty':'Find the parcel: follow the orange marker'):CITY.id==='kg'?'Back home':'The city that never sleeps')},350)},0);
 else document.documentElement.classList.remove('arriving');
@@ -1855,7 +1951,7 @@ function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffe
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 7 Nov d. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 9 Nov. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
