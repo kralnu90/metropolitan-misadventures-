@@ -169,6 +169,18 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
 .p-star{font-size:30px;line-height:1;background:none;border:0;padding:2px;color:rgba(255,255,255,.2);cursor:pointer}.p-star.on{color:#ffd23f}
 #pause textarea,#pause input{box-sizing:border-box;width:100%;font-family:var(--font-b);font-size:14px;padding:9px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:#0f1116;color:var(--ink);user-select:text;-webkit-user-select:text}
 #pause textarea{min-height:64px;resize:vertical}
+.p-row{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--ink);flex-wrap:wrap}
+.p-row b{color:var(--accent);font-variant-numeric:tabular-nums}
+.p-seg{display:flex;border:1px solid rgba(255,255,255,.2);border-radius:8px;overflow:hidden}
+.p-seg button{font-family:var(--font-b);font-weight:700;font-size:11px;padding:7px 10px;border:0;background:transparent;color:var(--dim);cursor:pointer}
+.p-seg button+button{border-left:1px solid rgba(255,255,255,.15)}
+.p-seg button.on{background:var(--accent);color:#1a1206}
+.p-seg button:focus-visible{outline:3px solid #fff3c4;outline-offset:-3px}
+#pause input[type=range]{padding:0;border:0;background:transparent;accent-color:var(--accent);height:28px}
+.p-ctl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12px}.p-ctl dt{color:var(--accent);font-weight:700}.p-ctl dd{margin:0;color:var(--dim)}
+body.lefty #btnE{left:calc(18px + env(safe-area-inset-left,0px));right:auto}
+body.lefty #btnB{left:calc(108px + env(safe-area-inset-left,0px));right:auto}
+@media (orientation:landscape) and (max-height:560px){body.lefty #btnB{left:calc(104px + env(safe-area-inset-left,0px))}}
 .t-credit{margin:0;font-size:11px;color:var(--dim)}
 #title{position:fixed;inset:0;display:flex;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));background:radial-gradient(ellipse at 50% 40%,rgba(18,20,26,.55),rgba(10,11,15,.94));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 #card{margin:auto;width:100%;max-width:380px;min-width:0;display:flex;flex-direction:column;gap:14px}
@@ -234,7 +246,7 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 9 Nov. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 9 Nov b. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
@@ -288,7 +300,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 9 Nov, pause menu</div>
+    <div class="tag">Kralnu Games presents · build 9 Nov b, settings</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -307,7 +319,10 @@ const cv=document.getElementById('g'),ctx=cv.getContext('2d');
 let W=0,H=0,DPR=1;
 var VIG=null;
 function mkVig(){}
-function resize(){DPR=Math.min(1.75,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR|0;cv.height=H*DPR|0;mkVig()}
+var SET={sens:1,music:.8,sfx:1,shake:true,res:1.75,lefty:false,mapFull:false};
+try{Object.assign(SET,JSON.parse(localStorage.getItem('mm-settings')||'{}'))}catch(_){}
+function saveSet(){try{localStorage.setItem('mm-settings',JSON.stringify(SET))}catch(_){}}
+function resize(){DPR=Math.min(SET.res,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR|0;cv.height=H*DPR|0;mkVig()}
 addEventListener('resize',resize);resize();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const touch=matchMedia('(pointer: coarse)').matches;
@@ -577,7 +592,7 @@ function driveCar(c,thr,steer,hb,f){c.brk=hb||(thr<0&&(c.fwd||0)>.4);const s=c.s
   if(!c.driver)fwd*=Math.pow(.96,f);
   fwd=clamp(fwd,-s.max*SPEED*.45,s.max*SPEED);
   lat*=Math.pow(hb?.93:(s.grip||.7),f);
-  c.st=(c.st||0)+(steer-(c.st||0))*Math.min(1,(c===P.car?.075:.25)*f);
+  c.st=(c.st||0)+(steer-(c.st||0))*Math.min(1,(c===P.car?.075*SET.sens:.25)*f);
   const spdF=1/(1+Math.max(0,Math.abs(fwd)-1.6)*.08);
   c.a+=c.st*s.turn*TURNK*f*clamp(fwd/1.6,-1,1)*spdF*(hb?1.5:1);
   c.vx=ca*fwd-sa*lat;c.vy=sa*fwd+ca*lat;c.x+=c.vx*f;c.y+=c.vy*f;c.fwd=fwd;c.lat=lat;
@@ -1401,8 +1416,8 @@ function update(dt){
     const mag=stickMag();
     if(stick.id!==null&&mag>.15){const want=Math.atan2(stick.dy,stick.dx),diff=angDiff(want,c.a);
       if(P.rev){if(Math.abs(diff)<1.3||c.fwd>1)P.rev=false}else if(Math.abs(diff)>2.5&&c.fwd<.8)P.rev=true;
-      if(!P.rev){thr=mag*(Math.abs(diff)>1.2?.5:1);steer=Math.abs(diff)<.1?0:clamp(diff*.85,-1,1)}
-      else{const db=angDiff(want,c.a+Math.PI);thr=-mag*.7;steer=clamp(-db*.85,-1,1)}
+      if(!P.rev){thr=mag*(Math.abs(diff)>1.2?.5:1);steer=Math.abs(diff)<.1?0:clamp(diff*.85*SET.sens,-1,1)}
+      else{const db=angDiff(want,c.a+Math.PI);thr=-mag*.7;steer=clamp(-db*.85*SET.sens,-1,1)}
       if(brakeHeld)hb=true;
     }else if(brakeHeld)thr=-1;
     driveCar(c,thr,steer,hb,f);P.x=c.x;P.y=c.y;
@@ -1573,7 +1588,7 @@ function drawCrane(k){const kk=2.6*.075,ox=(k.x-cam.x)*kk,oy=(k.y-cam.y)*kk;
 const FN=[[0,-1],[1,0],[0,1],[-1,0]];let miniFull=false;
 function render(t){
   const dk=darkness(),winLit=`rgba(255,206,120,${.35+dk*.55})`;
-  const z=cam.z,sh=reduced?0:cam.shake,sx=rnd(-sh,sh)*.4,sy=rnd(-sh,sh)*.4;
+  const z=cam.z,sh=(reduced||!SET.shake)?0:cam.shake,sx=rnd(-sh,sh)*.4,sy=rnd(-sh,sh)*.4;
   ctx.setTransform(DPR,0,0,DPR,0,0);ctx.fillStyle='#22475b';ctx.fillRect(0,0,W,H);
   ctx.setTransform(DPR*z,0,0,DPR*z,DPR*(W/2-(cam.x+sx)*z),DPR*(H/2-(cam.y+sy)*z));
   const vx0=cam.x-W/2/z-40,vy0=cam.y-H/2/z-40,vx1=cam.x+W/2/z+40,vy1=cam.y+H/2/z+40;VB.x0=vx0;VB.y0=vy0;VB.x1=vx1;VB.y1=vy1;
@@ -1633,7 +1648,7 @@ function render(t){
   mini.fillStyle='rgba(0,0,0,.55)';mini.fillRect(0,MS-13,MS,13);mini.fillStyle='#f1e8d6';mini.font='700 8px "Chivo Mono",monospace';mini.textAlign='center';mini.fillText(miniFull?'CITY MAP · TAP TO ZOOM':'TAP FOR CITY MAP',MS/2,MS-4);
 }
 
-document.getElementById('mini').addEventListener('click',()=>{miniFull=!miniFull});addEventListener('keydown',e=>{if(e.code==='KeyM'&&started)miniFull=!miniFull});
+document.getElementById('mini').addEventListener('click',()=>{miniFull=!miniFull;SET.mapFull=miniFull;saveSet()});addEventListener('keydown',e=>{if(e.code==='KeyM'&&started)miniFull=!miniFull});
 /* ================= The Golden Gnome casino (in-game cash only) ================= */
 let jackpot=50000,freeSpins=0,wheelDate='',gnomeHint=-1,czGame='wheel';
 const CZ_POS=(()=>{let best=null,bs=-1;
@@ -1852,7 +1867,7 @@ setInterval(cloudPush,20000);
 addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();cloudPush()}});
 
 /* ================= pause menu: review, support, contact, credits ================= */
-const GAME_VERSION='build 9 Nov',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
+const GAME_VERSION='build 9 Nov b',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
 const FORM_ID='1FAIpQLSe__mPhU5YGi9um01BreqNND9mJwaaChi_4ZCp-7P5JcCJKcw';
 const FORM_FIELDS={rating:'entry.1904387170',liked:'entry.2084220988',change:'entry.1413261780',name:'entry.1767709403',version:'entry.1994593489'};
 function reviewParams(r){const q=new URLSearchParams();q.set(FORM_FIELDS.rating,String(r.rating));q.set(FORM_FIELDS.liked,r.liked);q.set(FORM_FIELDS.change,r.change);q.set(FORM_FIELDS.name,r.name);q.set(FORM_FIELDS.version,'Metropolitan Misadventure '+GAME_VERSION);return q}
@@ -1867,8 +1882,8 @@ function pauseHome(){
     <button class="p-btn pri" id="pResume"><b>Resume</b><small>Back to the streets</small></button>
     <div class="p-grid">
       <button class="p-btn" id="pBook"><b>✎ Notebook</b><small>Challenges and records</small></button>
-      <button class="p-btn" id="pSnd"><b>♪ Sound ${muted?'off':'on'}</b><small>Tap to turn ${muted?'on':'off'}</small></button>
-      <button class="p-btn" id="pMap"><b>City map</b><small>${miniFull?'Showing whole city':'Showing radar'}</small></button>
+      <button class="p-btn" id="pSet"><b>⚙ Settings</b><small>Steering, sound, display</small></button>
+      <button class="p-btn" id="pCtl"><b>Controls</b><small>How to drive and fight</small></button>
       <button class="p-btn" id="pReview"><b>★ Leave a review</b><small>Goes straight to Kris</small></button>
     </div>
     <div class="p-sec">Kralnu Games</div>
@@ -1877,17 +1892,52 @@ function pauseHome(){
       <a class="p-btn" href="https://kralnugames.com" target="_blank" rel="noopener"><b>More games</b><small>kralnugames.com</small></a>
     </div>
     <div class="p-contact"><span>Say hello: <b id="pMail">${CONTACT}</b></span><button class="p-mini" id="pCopy">Copy</button></div>
-    <button class="p-btn small" id="pFresh"><b>Get the latest version</b><small>Reloads with any new update</small></button>
     <p class="p-credit">Ideas, design and testing by Kris. Built with Claude, an AI by Anthropic.<br>Metropolitan Misadventure · ${GAME_VERSION}</p>`;
   document.getElementById('pResume').onclick=closePause;
   document.getElementById('pBook').onclick=()=>{closePause();openNotebook()};
-  document.getElementById('pSnd').onclick=()=>{$snd.click();pauseHome()};
-  document.getElementById('pMap').onclick=()=>{miniFull=!miniFull;pauseHome()};
+  document.getElementById('pSet').onclick=pauseSettings;
+  document.getElementById('pCtl').onclick=pauseControls;
   document.getElementById('pReview').onclick=pauseReview;
-  document.getElementById('pFresh').onclick=()=>{save();document.getElementById('fresh').click()};
   document.getElementById('pCopy').onclick=()=>{const done=()=>{const b=document.getElementById('pCopy');if(b)b.textContent='Copied'};
     try{navigator.clipboard.writeText(CONTACT).then(done,()=>{selMail()})}catch(_){selMail()}};
 }
+function pauseControls(){$pbody.innerHTML=`<div class="p-head"><h2>Controls</h2><button class="p-mini" id="pBack">Back</button></div><dl class="p-ctl">${document.getElementById('ctrls').innerHTML}</dl>
+    <p class="p-blurb">Phone: drag anywhere to steer or walk. Tap the minimap for the whole city.</p>`;document.getElementById('pBack').onclick=pauseHome}
+function applySet(){document.body.classList.toggle('lefty',!!SET.lefty);resize();lastHud=''}
+function pauseSettings(){
+  const seg=(id,cur,opts)=>`<div class="p-seg" id="${id}">${opts.map(([v,l])=>`<button data-v="${v}" class="${String(cur)===String(v)?'on':''}" aria-pressed="${String(cur)===String(v)}">${l}</button>`).join('')}</div>`;
+  const pc=v=>Math.round(v*100)+'%';
+  $pbody.innerHTML=`<div class="p-head"><h2>Settings</h2><button class="p-mini" id="pBack">Back</button></div>
+    <div class="p-sec">Driving</div>
+    <label class="p-row" for="sSens"><span>Steering sensitivity</span><b id="sSensV">${pc(SET.sens)}</b></label>
+    <input type="range" id="sSens" min="0.5" max="1.5" step="0.05" value="${SET.sens}">
+    <p class="p-blurb">Lower is calmer, higher is twitchier. 100% is the standard feel.</p>
+    <div class="p-row"><span>Touch buttons</span>${seg('sHand',SET.lefty?1:0,[[0,'Right side'],[1,'Left side']])}</div>
+    <div class="p-sec">Sound</div>
+    <div class="p-row"><span>All sound</span>${seg('sMute',muted?0:1,[[1,'On'],[0,'Off']])}</div>
+    <label class="p-row" for="sMus"><span>Chase music</span><b id="sMusV">${pc(SET.music)}</b></label>
+    <input type="range" id="sMus" min="0" max="1" step="0.05" value="${SET.music}">
+    <label class="p-row" for="sSfx"><span>Crash sounds</span><b id="sSfxV">${pc(SET.sfx)}</b></label>
+    <input type="range" id="sSfx" min="0" max="1" step="0.05" value="${SET.sfx}">
+    <div class="p-sec">Display</div>
+    <div class="p-row"><span>Graphics</span>${seg('sRes',SET.res,[[1.75,'Sharp'],[1.25,'Balanced'],[1,'Battery saver']])}</div>
+    <div class="p-row"><span>Screen shake</span>${seg('sShake',SET.shake?1:0,[[1,'On'],[0,'Off']])}</div>
+    <div class="p-row"><span>Minimap</span>${seg('sMap',miniFull?1:0,[[0,'Radar'],[1,'Whole city']])}</div>
+    <div class="p-sec">App</div>
+    <button class="p-btn small" id="pFresh"><b>Get the latest version</b><small>Reloads with any new update</small></button>
+    <p class="p-blurb">Settings are saved on this device.</p>`;
+  document.getElementById('pBack').onclick=pauseHome;
+  const slider=(id,key,lab)=>{const el=document.getElementById(id);el.oninput=()=>{SET[key]=+el.value;document.getElementById(lab).textContent=pc(SET[key]);saveSet()};el.onchange=()=>{if(key==='sfx')thud(.5)}};
+  slider('sSens','sens','sSensV');slider('sMus','music','sMusV');slider('sSfx','sfx','sSfxV');
+  const segOn=(id,fn)=>document.querySelectorAll(`#${id} button`).forEach(b=>b.onclick=()=>{fn(b.dataset.v);document.querySelectorAll(`#${id} button`).forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on))})});
+  segOn('sHand',v=>{SET.lefty=v==='1';saveSet();applySet()});
+  segOn('sMute',v=>{if((v==='1')===muted)$snd.click()});
+  segOn('sRes',v=>{SET.res=+v;saveSet();applySet()});
+  segOn('sShake',v=>{SET.shake=v==='1';saveSet()});
+  segOn('sMap',v=>{miniFull=v==='1';SET.mapFull=miniFull;saveSet()});
+  document.getElementById('pFresh').onclick=()=>{save();document.getElementById('fresh').click()};
+}
+miniFull=!!SET.mapFull;document.body.classList.toggle('lefty',!!SET.lefty);
 function selMail(){const el=document.getElementById('pMail');if(!el)return;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
 function pauseReview(){let stars=0,sending=false;
   $pbody.innerHTML=`<div class="p-head"><h2>Leave a review</h2><button class="p-mini" id="pBack">Back</button></div>
@@ -1942,16 +1992,16 @@ const MEL=[67,0,71,74,79,74,71,74,72,0,76,72,69,72,76,72,74,0,78,74,69,74,78,81,
 const ROOTS=[43,43,48,45,50,50,48,50],BASS=[];ROOTS.forEach(r=>BASS.push(r,r+7,r+12,r+7));
 function initAudio(){if(AC)return;try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(_){AC=null}}
 function tone(m,t,dur,type,vol){if(!m)return;const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=440*Math.pow(2,(m-69)/12);
-  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+dur+.03)}
-function music(){if(!AC||muted||paused||!started){musicOn=false;return}const want=stars()>0||cars.some(c=>c.ai==='chaser');if(!want){musicOn=false;return}
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*SET.music,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+dur+.03)}
+function music(){if(!AC||muted||paused||!started||SET.music<=0){musicOn=false;return}const want=stars()>0||cars.some(c=>c.ai==='chaser');if(!want){musicOn=false;return}
   if(!musicOn){musicOn=true;nextNote=AC.currentTime+.05;step=0}const e=60/184/2;
   while(nextNote<AC.currentTime+.15){tone(MEL[step%32],nextNote,e*.85,'square',.045);tone(BASS[step%32],nextNote,e*.7,'triangle',.1);if(step%2===0)tone(step%4===0?36:0,nextNote,.05,'sine',.12);nextNote+=e;step++}}
-function thud(v){if(!AC||muted)return;const n=AC.sampleRate*.18,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);
-  const src=AC.createBufferSource(),g=AC.createGain(),fl=AC.createBiquadFilter();fl.type='lowpass';fl.frequency.value=700;g.gain.value=.5*v;src.buffer=b;src.connect(fl);fl.connect(g);g.connect(AC.destination);src.start()}
+function thud(v){if(!AC||muted||SET.sfx<=0)return;const n=AC.sampleRate*.18,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);
+  const src=AC.createBufferSource(),g=AC.createGain(),fl=AC.createBiquadFilter();fl.type='lowpass';fl.frequency.value=700;g.gain.value=.5*v*SET.sfx;src.buffer=b;src.connect(fl);fl.connect(g);g.connect(AC.destination);src.start()}
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 9 Nov. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 9 Nov b. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
