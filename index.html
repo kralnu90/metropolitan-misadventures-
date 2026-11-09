@@ -300,7 +300,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 9 Nov b, settings</div>
+    <div class="tag">Kralnu Games presents · build 9 Nov c, settings</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -1867,7 +1867,7 @@ setInterval(cloudPush,20000);
 addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();cloudPush()}});
 
 /* ================= pause menu: review, support, contact, credits ================= */
-const GAME_VERSION='build 9 Nov b',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
+const GAME_VERSION='build 9 Nov c',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
 const FORM_ID='1FAIpQLSe__mPhU5YGi9um01BreqNND9mJwaaChi_4ZCp-7P5JcCJKcw';
 const FORM_FIELDS={rating:'entry.1904387170',liked:'entry.2084220988',change:'entry.1413261780',name:'entry.1767709403',version:'entry.1994593489'};
 function reviewParams(r){const q=new URLSearchParams();q.set(FORM_FIELDS.rating,String(r.rating));q.set(FORM_FIELDS.liked,r.liked);q.set(FORM_FIELDS.change,r.change);q.set(FORM_FIELDS.name,r.name);q.set(FORM_FIELDS.version,'Metropolitan Misadventure '+GAME_VERSION);return q}
@@ -2007,6 +2007,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(start
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
   requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
+window.kgBuild=GAME_VERSION;window.kgBeforeUpdate=()=>{try{save()}catch(_){}};
 })();
 </script>
 <script>
@@ -2020,11 +2021,62 @@ if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWor
   addEventListener('appinstalled',()=>{btn.hidden=true;tip.hidden=true});
   if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!installed())tip.hidden=false;
   // Update button: clear the offline copy and load the newest build.
-  document.getElementById('fresh').addEventListener('click',async()=>{try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('mm-')).map(k=>caches.delete(k)))}}catch(_){}location.replace(location.pathname+'?v='+Date.now())});
+  document.getElementById('fresh').addEventListener('click',()=>{if(window.KralnuUpdate)window.KralnuUpdate.now();else location.reload()});
   // Title: shrink the heading until it fits the screen, whatever font loads.
   const h=document.querySelector('#card h1');
   const fit=()=>{h.style.fontSize='';let f=parseFloat(getComputedStyle(h).fontSize),n=0;while(h.scrollWidth>h.clientWidth+1&&f>18&&n++<40){f-=1;h.style.fontSize=f+'px'}};
   fit();addEventListener('resize',fit);if(document.fonts)document.fonts.ready.then(fit);
+})();
+</script>
+<style id="kg-update-style">
+.kg-upd{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top,0px));transform:translate(-50%,calc(-100% - 24px));transition:transform .35s ease;z-index:2147483001;width:min(440px,calc(100% - 20px));box-sizing:border-box;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#16202b;color:#f1f4f8;border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:10px 10px 10px 14px;box-shadow:0 10px 28px rgba(0,0,0,.4);font:600 14px/1.35 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;text-align:left;letter-spacing:0;text-transform:none}
+.kg-upd.on{transform:translate(-50%,0)}
+.kg-upd span{flex:1 1 160px}
+.kg-upd button{font:inherit;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid rgba(255,255,255,.25);background:transparent;color:inherit;white-space:nowrap;width:auto;margin:0}
+.kg-upd .kg-go{background:#f2c14e;border-color:#f2c14e;color:#1d1a0e}
+.kg-upd button:focus-visible{outline:3px solid #f2c14e;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.kg-upd{transition:none}}
+</style>
+<script id="kg-update">
+// Kralnu Games update check. When you push an update, change the game's version
+// AND version.json to the same new value; players then get a "new version" notice.
+(function(){
+  var NAME="Metropolitan Misadventure",BUILD="build 9 Nov c",CACHES=["mm-"],CHECK=true;
+  var path=location.pathname,dir=path.replace(/[^/]*$/,''),last=0,bar=null,busy=false;
+  if(/^\?v=\d+$/.test(location.search)){try{history.replaceState(history.state,'',path+location.hash)}catch(e){}}
+  function build(){return String(window.kgBuild!=null?window.kgBuild:BUILD)}
+  function skipped(v){try{return sessionStorage.getItem('kg-upd-skip')===v}catch(e){return false}}
+  function hide(){if(!bar)return;var b=bar;bar=null;b.classList.remove('on');setTimeout(function(){b.remove()},400)}
+  function note(html,buttons){hide();bar=document.createElement('div');bar.className='kg-upd';bar.setAttribute('role','status');
+    bar.innerHTML='<span>'+html+'</span>'+buttons;document.body.appendChild(bar);
+    var b=bar;requestAnimationFrame(function(){requestAnimationFrame(function(){b.classList.add('on')})});return b}
+  function latest(){return fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})}
+  function now(){if(busy)return;busy=true;
+    // Only clear the offline copy once we know the newest version can be downloaded.
+    latest().then(function(){
+      try{window.kgBeforeUpdate&&window.kgBeforeUpdate()}catch(e){}
+      var jobs=[];
+      try{if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)jobs.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.filter(function(r){return r.scope.indexOf(location.origin+dir)===0}).map(function(r){return r.unregister()}))}))}catch(e){}
+      try{if(window.caches)jobs.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return CACHES.some(function(p){return k.indexOf(p)===0})}).map(function(k){return caches.delete(k)}))}))}catch(e){}
+      var done=false,go=function(){if(done)return;done=true;location.replace(path+'?v='+Date.now())};
+      Promise.all(jobs).then(go,go);setTimeout(go,3000);
+    },function(){busy=false;
+      var b=note('No connection right now. Get online, then try again.','<button type="button" class="kg-later">OK</button>');
+      b.querySelector('.kg-later').onclick=hide;setTimeout(function(){if(bar===b)hide()},6000);
+    });
+  }
+  function show(v){if(bar||skipped(v))return;
+    var b=note('A new version of '+NAME+' is ready.','<button type="button" class="kg-later">Later</button><button type="button" class="kg-go">Update</button>');
+    b.querySelector('.kg-go').onclick=now;
+    b.querySelector('.kg-later').onclick=function(){try{sessionStorage.setItem('kg-upd-skip',v)}catch(e){}hide()};
+  }
+  function check(force){if(!CHECK)return;var t=Date.now();if(!force&&t-last<6e5)return;last=t;
+    latest().then(function(j){if(j&&j.version!=null&&String(j.version)!==build())show(String(j.version))}).catch(function(){})}
+  document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('[data-get-latest]');if(!b)return;e.preventDefault();e.stopPropagation();now()},true);
+  addEventListener('load',function(){setTimeout(function(){check(true)},4000)});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)check(false)});
+  setInterval(function(){if(!document.hidden)check(false)},18e5);
+  window.KralnuUpdate={now:now,check:function(){check(true)},build:build};
 })();
 </script>
 </body></html>
