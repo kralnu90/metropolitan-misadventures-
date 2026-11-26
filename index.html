@@ -18,6 +18,7 @@ canvas#g{position:fixed;inset:0;width:100%;height:100%;display:block}
 #vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(4,6,18,.4) 100%)}
 #hud{position:fixed;inset:0;pointer-events:none}
 #tl{position:absolute;left:calc(14px + env(safe-area-inset-left,0px));top:calc(10px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:6px;max-width:58vw}
+.kb{display:inline-block;width:.9em;height:.9em;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAnUlEQVR4XmNgGGjAiMsB/89Y/keXYzQ5jqEeQwCbRnwGMSFLEqMZBL6vUYW7DsUAZHDp2h+s/B8P3qCIww3AZzvIMD0tFhSNMFfgdAEMIGtGtx0E8BpASDNBA0DOBhmCzWYYIOgFmCG4ANwAbIkEZDMIYzOEM+Q2OA2hBi0UgDSpcaHaiR4LMICREpETCS4Asx0EcOYFbAYha6QaAAD/mUkTj0WiJAAAAABJRU5ErkJggg==) center/contain no-repeat;image-rendering:pixelated;vertical-align:-0.05em;margin-right:5px}
 #cash{font-family:var(--font-d);font-size:30px;line-height:1;color:var(--cash);text-shadow:0 3px 0 #000,0 0 14px rgba(0,0,0,.7);font-variant-numeric:tabular-nums}
 #stars{font-size:22px;letter-spacing:3px;line-height:1;text-shadow:0 2px 0 #000}
 #stars span{color:rgba(255,255,255,.16)}
@@ -231,7 +232,7 @@ html.arriving #title{display:none}
 <div id="vig" aria-hidden="true"></div>
 <div id="hud">
   <div id="tl">
-    <div id="cash">$50</div>
+    <div id="cash"><i class="kb"></i>50 Kb</div>
     <div id="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
     <div id="meta"><span id="lvl">LVL 1</span><span id="clock">08:00</span></div>
     <div id="xpb"><div></div></div>
@@ -246,7 +247,7 @@ html.arriving #title{display:none}
 </div>
 <div id="errbox" hidden role="alert"></div>
 <div id="fade" aria-live="polite"><div id="fadeT"></div><div id="fadeS"></div></div>
-<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 9 Nov b. Screenshot this for Claude.';d.hidden=false}
+<script>(function(){var shown=false;function show(m,src,line){if(shown)return;shown=true;var d=document.getElementById('errbox');d.textContent='Something went wrong: '+m+(line?' (line '+line+')':'')+'. Build 26 Nov. Screenshot this for Claude.';d.hidden=false}
 window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(e.error),e.filename,e.lineno)});addEventListener('unhandledrejection',function(e){var r=e.reason;show('promise: '+(r&&r.message||r))})})();</script>
 <div id="stick" hidden><div id="knob"></div></div>
 <button id="snd" hidden aria-pressed="true">♪ ON</button>
@@ -260,7 +261,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
   <div class="brow"><button id="bNo">Not now</button><button id="bGo">Next</button></div>
 </div></div>
 <div id="casino" hidden>
-  <div class="cz-top"><div class="cz-sign">The Golden Gnome<small>Casino · Kingsgate</small></div><div class="cz-right"><div class="cz-cash" id="czCash">$0</div><button class="cbtn alt" id="czLeave">Leave</button></div></div>
+  <div class="cz-top"><div class="cz-sign">The Golden Gnome<small>Casino · Kingsgate</small></div><div class="cz-right"><div class="cz-cash" id="czCash">0 Kb</div><button class="cbtn alt" id="czLeave">Leave</button></div></div>
   <nav class="cz-tabs" aria-label="Casino games"><button data-g="wheel">Daily Wheel</button><button data-g="slots">Slots</button><button data-g="bj">Blackjack</button><button data-g="rl">Roulette</button><button data-g="vp">Poker</button></nav>
   <section class="cz-game" id="g-wheel">
     <h2>Daily Wheel</h2><p class="cz-sub">One free spin a day on the house.</p>
@@ -268,7 +269,7 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
     <button class="cbtn big" id="wheelSpin">Spin the wheel</button><p class="cz-sub" id="wheelStatus"></p>
   </section>
   <section class="cz-game" id="g-slots" hidden>
-    <h2>Gnome Fortune</h2><div class="jpbox"><small>PROGRESSIVE JACKPOT</small><div class="jp" id="jp">$50,000</div><small>Three golden gnomes wins it all</small></div>
+    <h2>Gnome Fortune</h2><div class="jpbox"><small>PROGRESSIVE JACKPOT</small><div class="jp" id="jp">50,000 Kb</div><small>Three golden gnomes wins it all</small></div>
     <div class="cabinet"><div class="reels"><div class="reel">🍒</div><div class="reel">🔔</div><div class="reel">🍋</div></div></div>
     <p class="cz-sub" id="fs"></p>
     <div id="slotChips-wrap"></div><button class="cbtn big" id="slotSpin">Spin</button>
@@ -293,14 +294,14 @@ window.__mmErr=show;addEventListener('error',function(e){show(e.message||String(
     <div id="vpChips-wrap"></div><button class="cbtn big" id="vpGo">Deal</button>
     <div class="vppay" id="vpPay"></div>
   </section>
-  <p class="cz-foot">Play money only. The house always wins, which is why Del keeps asking about buying the place.</p>
+  <p class="cz-foot">Play K-Buks only. The house always wins, which is why Del keeps asking about buying the place.</p>
   <div class="cz-msg" id="czMsg" role="status"></div>
 </div>
 <button class="pad" id="btnE" hidden>ENTER</button>
 <button class="pad" id="btnB" hidden>BRAKE</button>
 <div id="title">
   <div id="card">
-    <div class="tag">Kralnu Games presents · build 9 Nov c, settings</div>
+    <div class="tag">Kralnu Games presents · build 26 Nov</div>
     <h1>Metropolitan Misadventure<small>in a Criminal City</small></h1>
     <p>Nick a car and work your way across five districts. Each one has its own yellow phone booth with its own kind of job: taxi fares, paper rounds, car boosts, smuggling and getaways. Del Rossi, behind the purple marker downtown, has bigger work for you, and more contacts open up as you level. Buy safe houses and dodgy businesses, mod your motor, and watch for orange event markers. Try your luck at The Golden Gnome casino downtown, with a free wheel spin every day. Progress saves on this device. Knock over pedestrians or ram cops and the stars go up. Lose them, or pay to respray at the green garage.</p>
     <dl id="ctrls"></dl>
@@ -709,7 +710,7 @@ let lastHud='';
 function hud(){
   const st=stars(),chase=st>0&&copsNear(600),m=mission?mission.type+'|'+JOBS[mission.type].info(mission).join('|'):'',hp=P.car?Math.round(P.car.hp/P.car.spec.hp*100):-1;
   const L=level(),key=Math.ceil(P.hp)+(raid?raidInfo():'')+cash+'|'+st+'|'+chase+'|'+m+'|'+hp+'|'+clockStr()+'|'+xp+courierInfo();if(key===lastHud)return;lastHud=key;
-  $cash.textContent='$'+cash.toLocaleString('en-GB');
+  $cash.innerHTML='<i class="kb"></i>'+cash.toLocaleString('en-GB')+' Kb';
   {const hb=document.getElementById('hpb');hb.firstChild.style.width=Math.max(0,P.hp)+'%';hb.classList.toggle('low',P.hp<35)}
   document.getElementById('lvl').textContent='LVL '+L;document.getElementById('clock').textContent=`${clockStr()} · Day ${day}`;document.getElementById('xpb').firstChild.style.width=Math.min(100,(xp-xpFor(L))/(xpFor(L+1)-xpFor(L))*100)+'%';
   [...$stars.children].forEach((s,i)=>s.classList.toggle('on',i<st));$stars.classList.toggle('chase',chase);
@@ -724,7 +725,7 @@ function burst(x,y,n,col,sp,life,size){for(let i=0;i<n;i++){const a=Math.random(
 function wreckCar(c){if(P.mode==='foot'&&dist(c.x,c.y,P.x,P.y)<60)setTimeout(()=>hurt(30,'BOOM!','#ffb347'),0);if(c.kind==='cop'&&c.ai==='cop')stat('copWreck');c.wreck=.001;c.hp=0;burst(c.x,c.y,40,'#ffb347',5,.8,8);burst(c.x,c.y,25,'#ff5d3a',3,1,10);cam.shake=12;
   if(P.car===c){exitCar();c.ai='parked';toast('Wrecked','Find another ride')}else if(c.ai==='traffic')c.ai='parked'}
 function busted(){const lose=Math.floor(cash*.2);cash-=lose;if(P.car)exitCar();{const sh=nearestSafe();P.x=sh.pos.x;P.y=sh.pos.y;SERVICES.forEach(v=>{if(dist(v.pos.x,v.pos.y,P.x,P.y)<70)v.snub=true})}heat=0;bustT=0;
-  cleanupMission(mission);for(const c of cars){if(c.ai==='cop'||c.ai==='chaser')c.ai='parked';c.keep=false}mission=null;toast('Busted',lose?`Fined $${lose}`:'Off with a warning');cam.x=P.x;cam.y=P.y}
+  cleanupMission(mission);for(const c of cars){if(c.ai==='cop'||c.ai==='chaser')c.ai='parked';c.keep=false}mission=null;toast('Busted',lose?`Fined ${lose} Kb`:'Off with a warning');cam.x=P.x;cam.y=P.y}
 const inCar=()=>P.mode==='car';
 const near=(p,r=38)=>dist(P.x,P.y,p.x,p.y)<r;
 function ptIn(style,from,minD,maxD,walk){for(let pass=0;pass<2;pass++)for(let i=0;i<160;i++){const e=pick(edges),k=Math.floor(e.pts.length*rnd(.25,.75)),q=walk?e.wp[Math.random()<.5?0:1][0][k]:e.pts[k],p={x:q[0],y:q[1]};
@@ -737,37 +738,37 @@ function taxiNext(m){m.stage='pickup';m.p=ptIn(null,P,350,900,true);m.pcol=pick(
 const JOBS={
   taxi:{name:'Taxi Fares',
     start(){if(!inCar()){toast('Taxi work needs a car','Come back with wheels');return null}const m={fares:0,earned:0};taxiNext(m);toast('On shift','Pick up fares, keep them happy');return m},
-    tick(m,dt){if(!inCar()){endJob('Shift over',`${m.fares} fares · $${m.earned}`,0);return}
+    tick(m,dt){if(!inCar()){endJob('Shift over',`${m.fares} fares · ${m.earned} Kb`,0);return}
       if(m.stage==='pickup'){if(near(m.p,42)&&speed(P.car)<1.6){m.stage='drop';m.d=ptIn(null,m.p,600,1400);m.t=est(m.p,m.d);m.hp0=P.car.hp;toast('Passenger in',`${m.t}s to the drop-off`)}}
-      else{m.t-=dt;if(near(m.d,42)&&speed(P.car)<1.6){const dmg=Math.max(0,m.hp0-P.car.hp),pay=payx(Math.max(20,Math.round(60+m.t*4+m.fares*15-dmg*2)));cash+=pay;m.earned+=pay;m.fares++;stat('fare');if(dmg<=5)stat('cleanFare');record('taxiStreak',m.fares,'max','Taxi streak',v=>`${v} fares`);gainXP(pay*.3+5);toast(`+$${pay}`,dmg>10?'Passenger looks shaken':'Smooth ride, nice tip');taxiNext(m)}
-        else if(m.t<=0)endJob('Fare walked off',`${m.fares} fares · $${m.earned}`,0)}},
+      else{m.t-=dt;if(near(m.d,42)&&speed(P.car)<1.6){const dmg=Math.max(0,m.hp0-P.car.hp),pay=payx(Math.max(20,Math.round(60+m.t*4+m.fares*15-dmg*2)));cash+=pay;m.earned+=pay;m.fares++;stat('fare');if(dmg<=5)stat('cleanFare');record('taxiStreak',m.fares,'max','Taxi streak',v=>`${v} fares`);gainXP(pay*.3+5);toast(`+${pay} Kb`,dmg>10?'Passenger looks shaken':'Smooth ride, nice tip');taxiNext(m)}
+        else if(m.t<=0)endJob('Fare walked off',`${m.fares} fares · ${m.earned} Kb`,0)}},
     info(m){return m.stage==='pickup'?['Pick up the passenger waving by the road. Stop next to them.',`${m.fares} fares`]:['Drop them off. Crashes eat your tip.',`${Math.ceil(m.t)}s`]},
     targets(m){return m.stage==='pickup'?[{...m.p,col:'#ffd23f',label:'FARE'}]:[{...m.d,col:'#ff5d73',label:'DROP OFF'}]},
     draw(m,t){if(m.stage==='pickup')drawPed({x:m.p.x,y:m.p.y,a:Math.sin(t*6)*.5-Math.PI/2,ph:t*8},m.pcol,false)}},
   papers:{name:'Paper Round',
     start(b){const hs=blds.filter(x=>x.style==='house'&&dist(x.x,x.y,b.x,b.y)<750&&!tooClose(x.x+x.w/2,x.y+x.h+16,90)).sort(()=>Math.random()-.5).slice(0,6);if(hs.length<3)return null;
       toast('Paper round','Hit every marked house');return{drops:hs.map(h=>({x:h.x+h.w/2,y:h.y+h.h+16})),t:80,got:0,total:hs.length}},
-    tick(m,dt){m.t-=dt;for(let i=m.drops.length-1;i>=0;i--)if(near(m.drops[i],30)){burst(m.drops[i].x,m.drops[i].y,8,'#f1e8d6',2,.4,3);m.drops.splice(i,1);m.got++;cash+=payx(25);gainXP(10);toast(`+$${payx(25)}`,`${m.got}/${m.total} delivered`)}
-      if(!m.drops.length){record('paperTime',80-m.t,'min','Paper round',secs);endJob('Round done','+$100 bonus',100)}else if(m.t<=0)endJob('Out of time',`${m.got}/${m.total} delivered`,0)},
+    tick(m,dt){m.t-=dt;for(let i=m.drops.length-1;i>=0;i--)if(near(m.drops[i],30)){burst(m.drops[i].x,m.drops[i].y,8,'#f1e8d6',2,.4,3);m.drops.splice(i,1);m.got++;cash+=payx(25);gainXP(10);toast(`+${payx(25)} Kb`,`${m.got}/${m.total} delivered`)}
+      if(!m.drops.length){record('paperTime',80-m.t,'min','Paper round',secs);endJob('Round done','+100 Kb bonus',100)}else if(m.t<=0)endJob('Out of time',`${m.got}/${m.total} delivered`,0)},
     info(m){return[`Lob papers at the marked houses, any order. ${m.got}/${m.total}`,`${Math.ceil(m.t)}s`]},
     targets(m){return m.drops.map(d=>({...d,col:'#ffd23f',label:''}))}},
   boost:{name:'Car Boost',
     start(b){const p=ptIn(null,b,700,1400,true),c=makeCar('sport',p.x,p.y,Math.random()*6.28);c.col='#d4af37';c.keep=true;cars.push(c);toast('Car boost','A buyer wants a gold sports car');return{stage:'find',car:c}},
     tick(m){const c=m.car;if(c.wreck){endJob('Car wrecked','The buyer walked',0);return}
       if(m.stage==='find'&&P.car===c){m.stage='deliver';addHeat(1);toast('Alarm tripped','Get it to the chop shop')}
-      if(m.stage==='deliver'&&P.car===c&&near(CHOP,42)){const pay=Math.max(50,Math.round(550*c.hp/c.spec.hp/10)*10);exitCar();const i=cars.indexOf(c);if(i>=0)cars.splice(i,1);endJob(`+$${pay}`,c.hp>=c.spec.hp*.95?'Mint condition':'Dents cost you',pay)}},
+      if(m.stage==='deliver'&&P.car===c&&near(CHOP,42)){const pay=Math.max(50,Math.round(550*c.hp/c.spec.hp/10)*10);exitCar();const i=cars.indexOf(c);if(i>=0)cars.splice(i,1);endJob(`+${pay} Kb`,c.hp>=c.spec.hp*.95?'Mint condition':'Dents cost you',pay)}},
     info(m){const c=m.car;return m.stage==='find'?['Find the gold sports car and nick it.','']:[P.car===c?'Deliver it to the chop shop. Every dent costs you.':'Get back in the gold car.',`${Math.round(c.hp/c.spec.hp*100)}%`]},
     targets(m){return m.stage==='deliver'&&P.car===m.car?[{...CHOP,col:'#ff5d73',label:'CHOP SHOP'}]:[{x:m.car.x,y:m.car.y,col:'#ffd23f',label:'TARGET'}]}},
   smuggle:{name:'Smuggling Run',
     start(b){toast('Smuggling run','Grab the crate off the quay');return{stage:'pickup',p:ptIn('dock',b,150,700)}},
     tick(m){if(m.stage==='pickup'&&near(m.p)){m.stage='drop';m.t0=performance.now();m.d=ptIn(Math.random()<.5?'house':'old',P,1100,2600);heat=Math.max(heat,2.2);heatQuiet=0;toast('Customs saw you','Two stars. Deliver anyway')}
-      else if(m.stage==='drop'&&near(m.d)){record('smuggleTime',(performance.now()-m.t0)/1000,'min','Smuggling run',secs);endJob('+$900','Crate delivered',900)}},
+      else if(m.stage==='drop'&&near(m.d)){record('smuggleTime',(performance.now()-m.t0)/1000,'min','Smuggling run',secs);endJob('+900 Kb','Crate delivered',900)}},
     info(m){return m.stage==='pickup'?['Collect the crate on the docks.','']:['Deliver the crate. The law is onto you.','']},
     targets(m){return[m.stage==='pickup'?{...m.p,col:'#ffd23f',label:'CRATE'}:{...m.d,col:'#ff5d73',label:'DROP OFF'}]}},
   getaway:{name:'Getaway Driver',
     start(b){if(!inCar()){toast('Getaway work needs a car','Bring something quick');return null}toast('Getaway driver','Wait outside the bank');return{stage:'bank',p:ptIn('tower',b,600,1800),w:0}},
     tick(m,dt){if(m.stage==='bank'){if(inCar()&&near(m.p,42)&&speed(P.car)<1){m.w+=dt;if(m.w>=4){m.stage='escape';heat=Math.max(heat,3.2);heatQuiet=0;toast('GO GO GO','Crew\'s in. Hit the hideout')}}else m.w=Math.max(0,m.w-dt*.5)}
-      else if(near(HIDEOUT,46)){if(copsNear(380)){if(!m.warned){toast('Not with cops behind you','Lose them first');m.warned=1}}else endJob('+$1,200','Clean getaway',1200)}else m.warned=0},
+      else if(near(HIDEOUT,46)){if(copsNear(380)){if(!m.warned){toast('Not with cops behind you','Lose them first');m.warned=1}}else endJob('+1,200 Kb','Clean getaway',1200)}else m.warned=0},
     info(m){return m.stage==='bank'?[m.w>0?'Hold still. The crew is coming out.':'Park outside the bank and wait.',m.w>0?`${Math.ceil(4-m.w)}s`:'']:['Get the crew to the hideout. Don\'t lead the cops there.','']},
     targets(m){return[m.stage==='bank'?{...m.p,col:'#ffd23f',label:'BANK'}:{...HIDEOUT,col:'#ff5d73',label:'HIDEOUT'}]}},
 };
@@ -787,8 +788,8 @@ Object.assign(JOBS,{
     brief:['\'Ello \'ello! Del Rossi, Kingsgate\'s finest dealer in pre-loved motors. Mostly pre-loved by other people.',
       'Got a customer after a purple coupé. Funny thing is, there\'s one sat on a drive up in Ashby Green.',
       'The owner\'s a bit attached to it. He might give chase. He\'s not a quick driver though. I hope.',
-      'Bring it back to my lot in one piece and there\'s $300 in it for you.'],
-    outro:'Smashing! Barely a scratch. Well, I\'ll call that a scratch. Here\'s your $300.',
+      'Bring it back to my lot in one piece and there\'s 300 Kb in it for you.'],
+    outro:'Smashing! Barely a scratch. Well, I\'ll call that a scratch. Here\'s your 300 Kb.',
     start(){const p=ptIn('house',DELP,600,99999,true),c=makeCar('sport',p.x,p.y,Math.random()*6.28);c.col='#8e44ad';c.keep=true;cars.push(c);return{stage:'steal',car:c,chasers:[]}},
     tick(m){const c=m.car;if(c.wreck){endJob('Coupé wrecked','Del will not be pleased',0);return}
       if(m.stage==='steal'&&P.car===c){m.stage='escape';m.chasers.push(spawnChaser('sedan','#f4f1e8',{max:6.1,acc:.15},CHASE_SHOUTS));toast('OI! THAT\'S MY MOTOR!','The owner\'s after you')}
@@ -799,7 +800,7 @@ Object.assign(JOBS,{
     brief:['My niece is getting married and the cake\'s still sat at the bakery in Hollow Market.',
       'Four tiers, cream everywhere. One sharp corner and it\'s a trifle.',
       'The church is up in Ashby Green. And watch out for Vinny the florist. He always fancied the bride.',
-      'Every crumb that makes it is cash in your pocket. Up to $700.'],
+      'Every crumb that makes it is cash in your pocket. Up to 700 Kb.'],
     outro:'Not bad at all! The top tier\'s gone a bit modern art, but nobody\'ll notice after the speeches.',
     start(){return{stage:'collect',p:ptIn('old',DELP,0,99999,true),chasers:[]}},
     tick(m,dt){
@@ -817,7 +818,7 @@ Object.assign(JOBS,{
     brief:['Shifty Shaw\'s opened a car lot. Reckons his motors are cheaper than mine. The cheek of it!',
       'He\'s got three shiny red ones parked out front. I want them looking a lot less shiny.',
       'His lads will come after you once you start. Lose \'em, then come home.',
-      '$800, and the satisfaction of a job well done. Mostly the $800.'],
+      '800 Kb, and the satisfaction of a job well done. Mostly the 800 Kb.'],
     outro:'Shifty\'s crying into his paperwork! Pleasure doing business, son. Pop back soon, I\'ll have more work.',
     start(){let e,tries=0;do{e=pick(edges);tries++}while(tries<60&&(dist(e.pts[e.pts.length>>1][0],e.pts[e.pts.length>>1][1],DELP.x,DELP.y)<700||e.pts.length<20));
       const W=e.wp[0][0],ex=[];for(const f of[.35,.5,.65]){const i=Math.floor(W.length*f),p=W[i],q=W[i+1];const c=makeCar('sedan',p[0],p[1],Math.atan2(q[1]-p[1],q[0]-p[0])+Math.PI/2);c.col='#e8402e';c.hp=45;c.keep=true;c.shaw=true;cars.push(c);ex.push(c)}
@@ -831,7 +832,7 @@ Object.assign(JOBS,{
     targets(m){return m.stage==='smash'?m.extras.filter(c=>!c.wreck).map(c=>({x:c.x,y:c.y,col:'#ff5d73',label:'SMASH'})):m.stage==='home'?[{...lot(),col:'#c86bd8',label:'DEL\'S LOT'}]:[]}},
 });
 function storyWin(m){const J=JOBS[m.type],ct=CONTACTS.find(c=>c.chain.includes(m.type)),pay=payx(m.pay??J.pay);cash+=pay;story[ct.id]=(story[ct.id]||0)+1;cleanupMission(m);mission=null;missionCD=3;save();
-  openBrief({ct,mis:`${J.title} · complete · +$${pay}`,lines:Array.isArray(J.outro)?J.outro:[J.outro],go:ct.thanks||'Cheers',done(){}});gainXP(200+(ct.lvl||1)*15)}
+  openBrief({ct,mis:`${J.title} · complete · +${pay} Kb`,lines:Array.isArray(J.outro)?J.outro:[J.outro],go:ct.thanks||'Cheers',done(){}});gainXP(200+(ct.lvl||1)*15)}
 /* briefing overlay */
 const $brief=document.getElementById('brief');let paused=false,briefSkip=null;
 function openBrief({ct,mis,lines,go,done,cancel}){paused=true;document.querySelector('.bcard').style.setProperty('--ct',ct.col);$opts.hidden=true;$opts.innerHTML='';let i=0;stick.id=null;stick.dx=stick.dy=0;stickEl.hidden=true;
@@ -867,7 +868,7 @@ function placeStalls(n){const out=[];for(let i=0;i<n*20&&out.length<n;i++){const
 /* ================= reusable mission templates ================= */
 const ctOf=type=>CONTACTS.find(c=>c.chain.includes(type));
 const homeOf=m=>{const ct=ctOf(m.type);return ct?ct.pos:HOME};
-function winMission(m){const J=JOBS[m.type];if(m.cps)records.raceWins++;if(J.kind==='event')stat('event');if(J.kind==='event'){const pay=m.pay??J.pay;gainXP(120+pay*.15);endJob(`+$${pay}`,`${J.title} · done`,pay)}else storyWin(m)}
+function winMission(m){const J=JOBS[m.type];if(m.cps)records.raceWins++;if(J.kind==='event')stat('event');if(J.kind==='event'){const pay=m.pay??J.pay;gainXP(120+pay*.15);endJob(`+${pay} Kb`,`${J.title} · done`,pay)}else storyWin(m)}
 function liveChasers(m){return(m.chasers||[]).filter(c=>c&&!c.wreck&&c.ai==='chaser')}
 function tSteal(o){return{...o,
   start(){const p=ptIn(o.where,P,o.minD||600,o.maxD||99999,true),c=makeCar(o.kind,p.x,p.y,Math.random()*6.28);c.col=o.col||c.col;c.keep=true;cars.push(c);return{stage:'steal',car:c,chasers:[]}},
@@ -953,23 +954,23 @@ CONTACTS.push(
 const ST={kind:'story'};
 Object.assign(JOBS,{
   pp1:tSmash({...ST,name:'Cllr Pratt · Gnomes',title:'Gnome Wrecker',pay:500,count:8,time:150,place:placeGnomes,
-    brief:['Ah, you must be the help. Councillor Prudence Pratt. Ashby Green\'s Best Kept Village award is mine this year.','The trouble is the Hendersons, and their neighbours. Garden gnomes. Dozens of the vulgar little things.','Flatten eight of them before the judges arrive. Accidentally, of course.','There\'s $500 for your discretion.'],
+    brief:['Ah, you must be the help. Councillor Prudence Pratt. Ashby Green\'s Best Kept Village award is mine this year.','The trouble is the Hendersons, and their neighbours. Garden gnomes. Dozens of the vulgar little things.','Flatten eight of them before the judges arrive. Accidentally, of course.','There\'s 500 Kb for your discretion.'],
     outro:'Not a gnome left standing. The judges will be thrilled. Well, I will.',smashText:'Flatten the garden gnomes. Drive or walk into them.',smashSub:'Gnome-icide',doneLine:['Gnomes gnobbled','Back to the Councillor']}),
   pp2:tFragile({...ST,name:'Cllr Pratt · Marrow',title:'The Prize Marrow',pay:650,item:'marrow',meterName:'Marrow',needCar:true,fragile:1.6,from:'house',to:'house',dropMin:500,timeMul:1.3,
     chaser:{kind:'van',col:'#4a7a3a',mod:{max:5.4,acc:.13},shouts:['MY MARROW!','I GREW THAT!','COME BACK, YOU BRUTE!'],line:['Reg Pickles wants it back!','He grew it, technically']},
-    brief:['The village show is tomorrow and my marrow is, let\'s say, underwhelming.','Reg Pickles has a monster in his allotment. Biggest in the county.','Borrow it. Get it to the show tent without bruising it. Bruises lose points, and you lose pay.','$650, and not a word to the Women\'s Institute.'],
+    brief:['The village show is tomorrow and my marrow is, let\'s say, underwhelming.','Reg Pickles has a monster in his allotment. Biggest in the county.','Borrow it. Get it to the show tent without bruising it. Bruises lose points, and you lose pay.','650 Kb, and not a word to the Women\'s Institute.'],
     outro:'First prize! Reg is in tears. Lovely. Here\'s your money, and do wipe your feet.',collectText:'Collect Reg Pickles\' prize marrow from his allotment.',goText:'Get the marrow to the show tent. Gently!',pickLabel:'ALLOTMENT',dropLabel:'SHOW TENT',gotLine:['Marrow loaded','Mind the bumps'],failMeter:['The marrow\'s mush','Soup, anyone?'],failTime:['The show\'s over','Reg\'s marrow wins anyway'],carWarn:'You can\'t carry a marrow that size'}),
   pp3:tTail({...ST,name:'Cllr Pratt · Inspector',title:'Planning Permission',pay:800,vkind:'sedan',col:'#b8bec6',near:70,far:380,speed:3.3,label:'INSPECTOR',
-    brief:['The planning inspector is about to approve a car park on my rose garden.','He\'s meeting someone tonight. Follow him and find out who.','Don\'t get too close, he\'s a nervous man. Don\'t fall behind either.','$800 for a spot of light espionage.'],
+    brief:['The planning inspector is about to approve a car park on my rose garden.','He\'s meeting someone tonight. Follow him and find out who.','Don\'t get too close, he\'s a nervous man. Don\'t fall behind either.','800 Kb for a spot of light espionage.'],
     outro:'He met the Hendersons! I knew it. Brown envelopes everywhere. Superb work.',startLine:['There goes the inspector','Keep your distance'],tailText:'Tail the inspector. Not too close, not too far.',spotted:['He spotted you!','Too close, Columbo'],lostSub:'He gave you the slip'}),
   gr1:tRam({...ST,name:'Grunt · Parts Thief',title:'Parts Thief',pay:900,vkind:'van',col:'#6d5a3c',hp:130,mod:{max:4.9,acc:.12},label:'THIEF',shouts:['NICKED IT FAIR!','CAN\'T CATCH ME!','SCRAP\'S MINE!'],
-    brief:['Grunt.','(He points at a van tearing off down the road, stuffed with his scrap.)','GRUNT.','(You get the idea. Ram it until it stops. He holds up nine fingers. $900.)'],
+    brief:['Grunt.','(He points at a van tearing off down the road, stuffed with his scrap.)','GRUNT.','(You get the idea. Ram it until it stops. He holds up nine fingers. 900 Kb.)'],
     outro:'(Grunt nods slowly. This is the happiest anyone has ever seen him.)',startLine:['There goes the thief!','Ram it until it stops'],ramText:'Ram the parts thief\'s van until it stops.',failLost:['The thief got away','Grunt grunts angrily']}),
   gr2:tSteal({...ST,name:'Grunt · Crusher',title:'Crusher Fodder',pay:1000,kind:'cop',where:'tower',heat:2,removeCar:true,carName:'cop car',destLabel:'CRUSHER',
-    brief:['Grunt.','(He mimes a car going into the crusher. Then puts on an imaginary police hat.)','(He wants a police car. For the crusher. Best not to ask.)','(Ten fingers. $1,000.)'],
+    brief:['Grunt.','(He mimes a car going into the crusher. Then puts on an imaginary police hat.)','(He wants a police car. For the crusher. Best not to ask.)','(Ten fingers. 1,000 Kb.)'],
     outro:'(The crusher goes CRUNCH. Grunt wipes away a single tear of joy.)',findText:'Find a parked police car downtown and nick it.',goText:'Get it to Grunt\'s crusher. The law wants it back.',stealLine:['You nicked a cop car!','Grunt will love this']}),
   gr3:tRace({...ST,name:'Grunt · Scrap Race',title:'Scrap Heap Challenge',pay:1200,rivals:3,rkind:'sedan',mod:{max:6.2,acc:.15},rcols:['#7a4a2a','#555a60','#8a7a3a'],rnames:['Rusty','Big Sal','The Welder'],legs:5,where:'shed',shouts:['OUTTA MY WAY!','EAT RUST!','VROOOM!'],
-    brief:['GRUNT.','(He points at three grimy blokes revving rust buckets by the yard gates.)','(Race them. Win. Grunt\'s honour is at stake. Also his yard.)','($1,200. He writes it in oil on the floor.)'],
+    brief:['GRUNT.','(He points at three grimy blokes revving rust buckets by the yard gates.)','(Race them. Win. Grunt\'s honour is at stake. Also his yard.)','(1,200 Kb. He writes it in oil on the floor.)'],
     outro:'(Grunt lifts you into the air. Puts you down. Hands over the cash. Grunts.)',startText:'Get to the race start in Ironside, in a car.'}),
   cb1:tFragile({...ST,name:'Cap\'n Barnacle · Rum',title:'Rum Runner',pay:1300,item:'rum',meterName:'Bottles',needCar:true,fragile:1.2,heat:2,timeMul:1.7,pickAt:()=>ptIn('dock',P,100,600,true),dropAt:()=>ptIn('tower',P,600,99999,true),
     brief:['Arr, there ye be! Cap\'n Barnacle, harbourmaster. Retired pirate. Mostly retired.','I\'ve a shipment o\' rum what customs don\'t know about. Clinky bottles, fragile as me knees.','Get it to the pub downtown. Customs will be on ye the moment ye load up.','1,300 doubloons. Dollars. Whatever ye landlubbers use.'],
@@ -982,14 +983,14 @@ Object.assign(JOBS,{
     outro:'The Golden Anchor be ours! I\'ll hang it next to me other trophy. It\'s a spoon.',startText:'Get to the race start on the docks, in a car.'}),
   nr1:tSmash({...ST,name:'Nana Ruth · Market',title:'Market Wars',pay:1500,count:6,place:placeStalls,heatEach:.4,
     chasers:[{kind:'sedan',col:'#5d4037',mod:{max:6.1,acc:.15},shouts:['ME STALL!','I\'LL TELL ME MUM!','YOU HOOLIGAN!']},{kind:'sedan',col:'#6d4c41',mod:{max:6.1,acc:.15},shouts:['OI, CAKEHOLE!','GET \'IM!','THAT WAS ORGANIC!']}],
-    brief:['Hello, dearie. Sit down, have a biscuit. I\'m Nana Ruth.','Some upstarts have set up stalls in my market without paying their respects.','Knock them over, there\'s a love. Mind the fruit.','Their boys will come after you. Lose them, then come back for tea. And $1,500.'],
+    brief:['Hello, dearie. Sit down, have a biscuit. I\'m Nana Ruth.','Some upstarts have set up stalls in my market without paying their respects.','Knock them over, there\'s a love. Mind the fruit.','Their boys will come after you. Lose them, then come back for tea. And 1,500 Kb.'],
     outro:'Lovely, dear. Here\'s your money and a custard cream. Don\'t tell your mother.',smashText:'Knock over the rival market stalls.',smashSub:'Fruit everywhere',doneLine:['Stalls flattened','Here come their boys']}),
   nr2:tFragile({...ST,name:'Nana Ruth · China',title:'The Best China',pay:1800,item:'china',meterName:'China',needCar:true,fragile:2.2,timeMul:1.4,pickAt:()=>ptIn('tower',P,500,99999,true),dropAt:m=>homeOf(m),
     chaser:{kind:'van',col:'#9b59b6',mod:{max:5.6,acc:.14},shouts:['THAT\'S MY CHINA!','RUTH, YOU OLD BAT!','GIVE IT BACK!'],line:['It\'s Mavis!','Nana\'s arch-rival, in a van']},
-    brief:['Mavis from the bingo has had my best china for twenty-two years. "Borrowed", she said.','It\'s at her daughter\'s flat downtown, and the daughter\'s out.','Bring it home in one piece. It\'s Royal Doulton, dear. Well, Royal Doulton-ish.','$1,800. Mavis will notice. Mavis always notices.'],
+    brief:['Mavis from the bingo has had my best china for twenty-two years. "Borrowed", she said.','It\'s at her daughter\'s flat downtown, and the daughter\'s out.','Bring it home in one piece. It\'s Royal Doulton, dear. Well, Royal Doulton-ish.','1,800 Kb. Mavis will notice. Mavis always notices.'],
     outro:'Oh, not a chip! Well, one chip. That was there before. Probably. Thank you, dear.',collectText:'Collect the china from the flat downtown.',goText:'Bring the china back to Nana\'s tea shop.',pickLabel:'CHINA',dropLabel:'TEA SHOP',gotLine:['China packed','Wrapped in a tea towel'],failMeter:['Smashed to bits','That\'s a jigsaw now'],failTime:['Too slow, dear','Mavis got it back']}),
   nr3:tGetaway({...ST,name:'Nana Ruth · Bingo',title:'Eyes Down',pay:3000,where:null,wait:5,heat:4,spotLabel:'BINGO HALL',
-    brief:['Fifty years I\'ve played bingo at the Palais. Fifty years Mavis wins.','Tonight I\'m collecting the jackpot. All of it. From the safe.','Drive me there, wait outside, then drive like your nan\'s in the back. Because she will be.','$3,000, dear. Eyes down.'],
+    brief:['Fifty years I\'ve played bingo at the Palais. Fifty years Mavis wins.','Tonight I\'m collecting the jackpot. All of it. From the safe.','Drive me there, wait outside, then drive like your nan\'s in the back. Because she will be.','3,000 Kb, dear. Eyes down.'],
     outro:'Ooh, what a night! Mavis will be livid. Here\'s your cut, and take a scone for the road.',parkText:'Park outside the bingo hall and wait for Nana.',waitText:'Nana\'s collecting the takings. Hold still.',goLine:['FULL HOUSE!','Four stars. Get Nana home'],escapeText:'Get Nana back to the tea shop. No coppers in tow.'}),
 });
 const EV={kind:'event'};
@@ -1038,7 +1039,7 @@ function openMenu(cfg){paused=true;stick.id=null;stick.dx=stick.dy=0;stickEl.hid
   const draw=()=>{line.textContent=cfg.line();$opts.innerHTML='';for(const o of cfg.options()){const b=document.createElement('button');b.className='opt';b.disabled=!!o.off;b.innerHTML=`<span>${o.label}</span><small>${o.note||''}</small>`;if(o.info){b.className='opt info'+(o.head?' head':'');b.tabIndex=-1}else b.onclick=()=>{o.act();save();draw()};$opts.appendChild(b)}};
   draw();$opts.hidden=false;$brief.hidden=false;
   bGo.onclick=()=>{$brief.hidden=true;$opts.hidden=true;$opts.innerHTML='';paused=false;cfg.close&&cfg.close()}}
-const money=n=>'$'+Math.round(n).toLocaleString('en-GB');
+const money=n=>Math.round(n).toLocaleString('en-GB')+' Kb';
 function serviceMenu(s){
   if(s.type==='casino'){openCasino();return}
   if(s.type==='travel'){if(mission){if(mission.type!=='lfin')toast('Finish the job first','Travel opens again after');return}travelMenu(s);return}
@@ -1050,18 +1051,18 @@ function serviceMenu(s){
       if(P.car&&!garageSlots[s.id])o.push({label:'Store this car',note:'Keeps its upgrades and colour',act(){const c=P.car;garageSlots[s.id]={kind:c.kind,col:c.col,up:c.up||{e:0,g:0,a:0}};exitCar();const i=cars.indexOf(c);if(i>=0)cars.splice(i,1);toast('Car stored','')}});
       if(!P.car&&garageSlots[s.id])o.push({label:`Take out your ${garageSlots[s.id].kind}`,note:'Drives out ready to go',act(){const d=garageSlots[s.id],c=makeCar(d.kind,s.pos.x,s.pos.y,0);c.col=d.col;c.up=d.up;deriveSpec(c);c.hp=c.spec.hp;cars.push(c);c.ai='player';c.driver=true;P.mode='car';P.car=c;delete garageSlots[s.id]}});
       return o}})}
-  else if(s.type==='biz'){const z=BIZ.find(b=>b.id===s.id),st=bizState[z.id]||{own:false,stash:0};openMenu({col:'#9be27a',face:'$',name:z.name,role:st.own?`Earning ${money(z.inc)} an hour`:`Business for sale · LVL ${z.lvl}`,
+  else if(s.type==='biz'){const z=BIZ.find(b=>b.id===s.id),st=bizState[z.id]||{own:false,stash:0};openMenu({col:'#9be27a',face:'Kb',name:z.name,role:st.own?`Earning ${money(z.inc)} an hour`:`Business for sale · LVL ${z.lvl}`,
     line:()=>{const st2=bizState[z.id];return st2&&st2.own?`${z.blurb} The stash holds ${money(st2.stash)} (fills up after 24 in-game hours).`:`${z.blurb} Earns ${money(z.inc)} every in-game hour.`},
     options:()=>{const st2=bizState[z.id];if(!st2||!st2.own){const lk=level()<z.lvl;return[{label:`Buy for ${money(z.cost)}`,note:lk?`Needs level ${z.lvl}`:cash<z.cost?`You need ${money(z.cost-cash)} more`:'Passive income, collect it here',off:lk||cash<z.cost,act(){cash-=z.cost;bizState[z.id]={own:true,stash:0};toast('Business acquired',z.name)}}]}
       return[{label:`Collect ${money(st2.stash)}`,note:st2.stash?'Into your pocket':'Nothing yet. Come back later',off:!st2.stash,act(){cash+=st2.stash;toast(`+${money(st2.stash)}`,z.name);st2.stash=0}}]}})}
   else if(s.type==='garage'){openMenu({col:'#5aa9ff',face:'⚙',name:s.name,role:'Mods and repairs',
     line:()=>P.car?`Lovely motor. What can we do for your ${P.car.kind}?`:'Bring a car in and we\'ll make it go faster. Or at least louder.',
     options:()=>{if(!P.car)return[];const c=P.car;if(!c.up)c.up={e:0,g:0,a:0};if(c.kind==='cop'||c.spec.max!==SPECS[c.kind].max*(1+.08*c.up.e))deriveSpec(c);
-      const o=Object.entries(UPS).map(([k,u])=>{const lv=c.up[k],mx=u.cost.length,cost=u.cost[lv];const extra=k==='a'?` · body ${Math.round(c.spec.hp)}→${Math.round(SPECS[c.kind].hp*(1+u.per*Math.min(mx,lv+1)))}`:'';return{label:`${u.n} ${'●'.repeat(lv)}${'○'.repeat(mx-lv)}`,note:lv>=mx?'Maxed out':`${money(cost)}`+(cash<cost?' · not enough cash':extra),off:lv>=mx||cash<cost,act(){cash-=cost;c.up[k]++;deriveSpec(c);if(k==='a')c.hp=c.spec.hp;toast(`${u.n} upgraded`,`Level ${c.up[k]}`)}}});
-      o.push({label:'Repair and wash',note:c.hp>=c.spec.hp?'Already spotless':'$525',off:c.hp>=c.spec.hp||cash<525,act(){cash-=525;c.hp=c.spec.hp;toast('Good as new','')}});return o}})}
+      const o=Object.entries(UPS).map(([k,u])=>{const lv=c.up[k],mx=u.cost.length,cost=u.cost[lv];const extra=k==='a'?` · body ${Math.round(c.spec.hp)}→${Math.round(SPECS[c.kind].hp*(1+u.per*Math.min(mx,lv+1)))}`:'';return{label:`${u.n} ${'●'.repeat(lv)}${'○'.repeat(mx-lv)}`,note:lv>=mx?'Maxed out':`${money(cost)}`+(cash<cost?' · not enough K-Buks':extra),off:lv>=mx||cash<cost,act(){cash-=cost;c.up[k]++;deriveSpec(c);if(k==='a')c.hp=c.spec.hp;toast(`${u.n} upgraded`,`Level ${c.up[k]}`)}}});
+      o.push({label:'Repair and wash',note:c.hp>=c.spec.hp?'Already spotless':'525 Kb',off:c.hp>=c.spec.hp||cash<525,act(){cash-=525;c.hp=c.spec.hp;toast('Good as new','')}});return o}})}
   else if(s.type==='threads'){openMenu({col:'#e07a5f',face:'👕',name:s.name,role:'Fine clothing, some of it legal',
-    line:()=>'New jacket? Every one is $875, and every one is a crime against fashion.',
-    options:()=>JACKETS.map(j=>({label:j.n,note:j.gnomes&&found.length<j.gnomes?`Find ${j.gnomes} lost gnomes`:P.col===j.c?'Wearing it':'$875',off:(j.gnomes&&found.length<j.gnomes)||P.col===j.c||cash<875,act(){cash-=875;P.col=j.c;toast('Looking sharp',j.n)}}))})}
+    line:()=>'New jacket? Every one is 875 Kb, and every one is a crime against fashion.',
+    options:()=>JACKETS.map(j=>({label:j.n,note:j.gnomes&&found.length<j.gnomes?`Find ${j.gnomes} lost gnomes`:P.col===j.c?'Wearing it':'875 Kb',off:(j.gnomes&&found.length<j.gnomes)||P.col===j.c||cash<875,act(){cash-=875;P.col=j.c;toast('Looking sharp',j.n)}}))})}
 }
 function serviceCheck(){if(paused)return;for(const s of SERVICES){const d=dist(P.x,P.y,s.pos.x,s.pos.y);if(d>60)s.snub=false;if(d<28&&!s.snub&&(!P.car||speed(P.car)<1.6)){s.snub=true;serviceMenu(s);return}}}
 function eventCheck(){if(mission||paused||missionCD>0)return;for(let i=0;i<events.length;i++){const e=events[i];if(near(e,32)){events.splice(i,1);const J=JOBS[e.type],m=J.start(e);m.type=e.type;mission=m;return}}}
@@ -1070,7 +1071,7 @@ function drawSign(x,y,col,ch,label,dim){ctx.globalAlpha=dim?.55:1;ctx.fillStyle=
   if(label){ctx.font='700 8px "Chivo Mono",monospace';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.7)';ctx.strokeText(label,x,y+21);ctx.fillStyle=col;ctx.fillText(label,x,y+21)}ctx.globalAlpha=1}
 function drawServices(){for(const s of SERVICES){const p=s.pos;if(Math.abs(p.x-cam.x)>700||Math.abs(p.y-cam.y)>900)continue;
   if(s.type==='safe')drawSign(p.x,p.y,'#f1e8d6','H',owned[s.id]?'SAFE HOUSE':`FOR SALE ${money(s.cost)}`,!owned[s.id]);
-  else if(s.type==='biz'){const st=bizState[s.id];drawSign(p.x,p.y,'#9be27a','$',st&&st.own?(st.stash?`COLLECT ${money(st.stash)}`:s.name.toUpperCase()):`${s.name.toUpperCase()} · LVL ${s.lvl}`,!(st&&st.own))}
+  else if(s.type==='biz'){const st=bizState[s.id];drawSign(p.x,p.y,'#9be27a','Kb',st&&st.own?(st.stash?`COLLECT ${money(st.stash)}`:s.name.toUpperCase()):`${s.name.toUpperCase()} · LVL ${s.lvl}`,!(st&&st.own))}
   else if(s.type==='travel')drawTravel(s);else if(s.type==='courier')drawSign(p.x,p.y,'#ffb347','C',courierSign());
   else if(s.type==='garage')drawSign(p.x,p.y,'#5aa9ff','M','MOD GARAGE');else if(s.type==='casino'){const a=(p.a||0);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(a);ctx.fillStyle='#8e1b2c';ctx.fillRect(-14,-10,56,20);ctx.fillStyle='#f2c14e';for(const yy of[-13,13])for(let xx=-10;xx<=40;xx+=12){ctx.beginPath();ctx.arc(xx,yy,2.4,0,7);ctx.fill()}ctx.strokeStyle='rgba(242,193,78,.7)';ctx.lineWidth=1.5;for(const yy of[-13,13]){ctx.beginPath();ctx.moveTo(-10,yy);for(let xx=-10;xx<=40;xx+=12)ctx.quadraticCurveTo(xx+6,yy+3,xx+12,yy);ctx.stroke()}ctx.restore();drawSign(p.x,p.y,'#f2c14e','♣',wheelDate!==todayKey()?'CASINO · FREE SPIN!':'THE GOLDEN GNOME CASINO')}else drawSign(p.x,p.y,'#e07a5f','T','THREADS')}
   for(const e of events){marker(e.x,e.y,'#ff9f1c',performance.now()/1000,'! '+JOBS[e.type].title.toUpperCase())}}
@@ -1112,7 +1113,7 @@ const CH_POOL=[
 ];
 let daily={day:0,list:[]},records={taxiStreak:0,paperTime:0,smuggleTime:0,chase:0,drift:0,raceWins:0},chaseRun=0,driftRun=0;
 function genDaily(){const pool=CH_POOL.slice().sort(()=>Math.random()-.5).slice(0,3);daily={day,list:pool.map(p=>({id:p.id,n:Math.round(rnd(p.r[0],p.r[1])),prog:0,done:false,pay:payx(p.pay)}))}}
-function stat(k,v=1){for(const c of daily.list){if(c.done||c.id!==k)continue;c.prog+=v;if(c.prog>=c.n){c.done=true;c.prog=c.n;cash+=c.pay;gainXP(120);toast('Challenge done!',`+$${c.pay} · ${chText(c)}`)}}}
+function stat(k,v=1){for(const c of daily.list){if(c.done||c.id!==k)continue;c.prog+=v;if(c.prog>=c.n){c.done=true;c.prog=c.n;cash+=c.pay;gainXP(120);toast('Challenge done!',`+${c.pay} Kb · ${chText(c)}`)}}}
 const chText=c=>CH_POOL.find(p=>p.id===c.id).t.replace('{n}',c.n);
 function record(k,v,better,label,fmt){const old=records[k];const beat=better==='max'?v>old:(old===0||v<old);if(beat){records[k]=v;if(old>0||better==='max')toast('NEW RECORD!',`${label}: ${fmt(v)}`);save()}}
 const secs=v=>`${v.toFixed(1)}s`;
@@ -1125,7 +1126,7 @@ for(let t=0;t<40000&&LOST.length<50;t++){const x=60+grand()*(MW-120),y=60+grand(
   if(!ok||LOST.some(q=>dist(q.x,q.y,x,y)<150*K)||tooClose(x,y,80))continue;LOST.push({x,y})}
 if(CITY.id!=='kg')LOST.length=0;
 let found=[];
-const GNOME_REWARDS={10:'$2,250 and the Gold jacket at Threads',20:'The Gnomemobile, waiting in a safe house garage',30:'+25% income from every business',40:'$11,250',50:'$22,500 and Gnome Luck: cops lose you faster'};
+const GNOME_REWARDS={10:'2,250 Kb and the Gold jacket at Threads',20:'The Gnomemobile, waiting in a safe house garage',30:'+25% income from every business',40:'11,250 Kb',50:'22,500 Kb and Gnome Luck: cops lose you faster'};
 function collectGnome(i){found.push(i);if(i===gnomeHint)gnomeHint=-1;stat('gnome');const n=found.length;burst(LOST[i].x,LOST[i].y,18,'#ffd23f',3,.8,3);thud(.25);
   if(GNOME_REWARDS[n]){if(n===10)cash+=payx(1000);if(n===40)cash+=payx(5000);if(n===50)cash+=payx(10000);
     if(n===20){const sl=SAFES.find(s=>owned[s.id]&&!garageSlots[s.id]);const car={kind:'sport',col:'#2f7d4f',up:{e:3,g:3,a:3}};if(sl)garageSlots[sl.id]=car;else{const c=makeCar('sport',P.x+30,P.y,0);c.col=car.col;c.up=car.up;deriveSpec(c);c.hp=c.spec.hp;cars.push(c)}}
@@ -1146,13 +1147,13 @@ function raidTick(){if(!raid)return;const z=raid.z,s=bizState[z.id];
   if(!raid.spawned&&dist(P.x,P.y,z.pos.x,z.pos.y)<650){raid.spawned=true;for(let i=0;i<raid.n;i++){const sp=laneNear(z.pos.x,z.pos.y,320);if(!sp)continue;const c=makeCar('sedan',sp.x,sp.y,sp.a);c.spec={...SPECS.sedan,max:6.1,acc:.15,hp:90};c.hp=90;c.col='#2c3e50';c.ai='raider';c.driver=true;c.keep=true;c.home=z.pos;c.shouts=RAID_SHOUTS;cars.push(c);raid.gang.push(c)}toast('Shaw\'s lads are here','Wreck every one of them')}
   if(raid.spawned){if(raid.gang.some(c=>!c.wreck&&!cars.includes(c))){raid.gang=raid.gang.filter(c=>c.wreck);raid.spawned=false;raid.n=Math.max(1,raid.n-raid.gang.length);raid.gang=[]}
     else if(raid.gang.length&&raid.gang.every(c=>c.wreck)){const pay=payx(300)+z.inc*4;cash+=pay;s.stash=Math.min(z.inc*24*incMul(),s.stash+z.inc*3);notoriety.defended++;gainXP(220);
-      toast('Raid repelled!',`+$${pay}`+(notoriety.defended%3===0?' · Turf bonus: +10% business income':''));raid.gang.forEach(c=>c.keep=false);raid=null;save();return}}
+      toast('Raid repelled!',`+${pay} Kb`+(notoriety.defended%3===0?' · Turf bonus: +10% business income':''));raid.gang.forEach(c=>c.keep=false);raid=null;save();return}}
   if(absMin()>raid.until){s.stash=0;s.down=absMin()+720;notoriety.lost++;raid.gang.forEach(c=>{c.keep=false;if(c.ai==='raider'){c.ai='parked';c.driver=false}});toast('Raid lost',`${z.name} is shut for 12 hours`);raid=null;save()}}
 function raidInfo(){if(!raid)return'';const left=Math.max(0,Math.ceil((raid.until-absMin())/2)),live=raid.gang.filter(c=>!c.wreck).length;return`<b>RAID · ${raid.z.name.toUpperCase()}</b>${raid.spawned?`Wreck the Shaw Gang. ${live} left.`:'Get to your business before they wreck it.'} <span class="t">${left}s</span>`}
 
 /* notebook */
 function openNotebook(){const nb=()=>{const n=found.length,next=Math.min(50,Math.ceil((n+1)/10)*10);return[
-  {info:1,head:1,label:'TODAY\'S CHALLENGES',note:`Day ${day}`},...daily.list.map(c=>({info:1,label:chText(c),note:c.done?`✓ +$${c.pay}`:`${Math.floor(c.prog)}/${c.n} · $${c.pay}`})),{info:1,label:'Courier run to Lumen City',note:runOn()?(run.stage==='return'?`Parcel ${Math.round(run.cond)}% intact`:'Under way'):run&&run.day===day?'✓ Done today':'Swift & Shifty, Kingsgate'},
+  {info:1,head:1,label:'TODAY\'S CHALLENGES',note:`Day ${day}`},...daily.list.map(c=>({info:1,label:chText(c),note:c.done?`✓ +${c.pay} Kb`:`${Math.floor(c.prog)}/${c.n} · ${c.pay} Kb`})),{info:1,label:'Courier run to Lumen City',note:runOn()?(run.stage==='return'?`Parcel ${Math.round(run.cond)}% intact`:'Under way'):run&&run.day===day?'✓ Done today':'Swift & Shifty, Kingsgate'},
   {info:1,head:1,label:'PERSONAL BESTS',note:''},
   {info:1,label:'Longest taxi streak',note:records.taxiStreak?`${records.taxiStreak} fares`:'—'},{info:1,label:'Fastest paper round',note:records.paperTime?secs(records.paperTime):'—'},
   {info:1,label:'Fastest smuggling run',note:records.smuggleTime?secs(records.smuggleTime):'—'},{info:1,label:'Longest police chase',note:records.chase?secs(records.chase):'—'},
@@ -1171,7 +1172,7 @@ const POWS=['POW!','BIFF!','WHAM!','BOP!','KAPOW!','THWACK!'];
 function hurt(n,txt,col){if(P.mode!=='foot'||P.hp<=0)return;P.hp-=n;P.hurtT=0;pop(P.x,P.y-14,txt,col||'#ff8a8a');cam.shake=Math.max(cam.shake,4);if(P.hp<=0)wasted()}
 function wasted(){const bill=Math.floor(cash*.1);cash-=bill;if(mission){cleanupMission(mission);mission=null;missionCD=4}
   for(const p of peds)if(p.cop)p.flee=10;heat=0;const sh=nearestSafe();P.x=sh.pos.x;P.y=sh.pos.y;P.hp=100;SERVICES.forEach(v=>{if(dist(v.pos.x,v.pos.y,P.x,P.y)<70)v.snub=true});
-  cam.x=P.x;cam.y=P.y;toast('WASTED',bill?`Hospital bill: $${bill.toLocaleString('en-GB')}`:'Patched up for free');save()}
+  cam.x=P.x;cam.y=P.y;toast('WASTED',bill?`Hospital bill: ${bill.toLocaleString('en-GB')} Kb`:'Patched up for free');save()}
 function punch(){if(P.mode!=='foot'||P.punchCD>0||paused)return;P.punchCD=.35;P.punchT=.16;
   let best=null,bd=28;for(const p of peds){if(p.down)continue;const d=dist(p.x,p.y,P.x,P.y);if(d>bd)continue;if(Math.abs(angDiff(Math.atan2(p.y-P.y,p.x-P.x),P.a))>1.25)continue;bd=d;best=p}
   if(!best){thud(.06);return}
@@ -1207,7 +1208,7 @@ const SHAW_HQ=(()=>{const ds=blds.filter(b=>b.style==='dock').sort((a,b)=>b.w*b.
 JOBS.fin1={kind:'story',name:'The Big One',title:'The Big One',pay:25000,
   brief:['DEL: Right, listen up. Shifty Shaw\'s been nicking our motors, raiding our businesses and generally being a right pain.','NANA RUTH: He short-changed me at bingo in 1987, dear. I have a very long memory.',
     'CAP\'N BARNACLE: His HQ be in a warehouse on my docks, full o\' golden statues of himself. Vanity, matey.','CLLR PRATT: Smash the statues, catch the man, and I\'ll see the paperwork goes... missing.',
-    'GRUNT: GRUNT. (He cracks his knuckles. It sounds like a car crash.)','DEL: Finish him off and there\'s $25,000 from all of us. Let\'s go and ruin his day.'],
+    'GRUNT: GRUNT. (He cracks his knuckles. It sounds like a car crash.)','DEL: Finish him off and there\'s 25,000 Kb from all of us. Let\'s go and ruin his day.'],
   outro:['DEL: You only went and did it! Shaw\'s limo is a pancake and he\'s legged it to Margate.','NANA RUTH: I\'ve baked you a cake. Don\'t drive with it.','CAP\'N BARNACLE: Arr, the docks be free! I\'ll name me next boat after ye. Possibly.',
     'CLLR PRATT: Splendid. I\'m putting you forward for Best Kept Criminal.','GRUNT: (Grunt hugs you. Several ribs complain.)','THE END... ish. Metropolitan Misadventure continues. The city is yours to wreck.'],
   start(){return{stage:'go',chasers:[],extras:[],props:[],lost:0}},
@@ -1255,130 +1256,130 @@ Object.assign(JOBS,{
   /* Disco Dave */
   dd1:tSteal({...ST,name:'Disco Dave · Discomobile',title:'Night Fever',pay:600,kind:'sport',col:'#f4f4f4',where:'house',dmgPay:true,carName:'white convertible',destLabel:'CLUB MIRRORBALL',
     chasers:[{kind:'sedan',col:'#ffb13f',mod:{max:6,acc:.15},shouts:['THAT\'S MY CAR!','I WAS GOING TO A WEDDING!','STOP THAT DISCO THIEF!']}],
-    brief:['Oh yeah, baby! Disco Dave. Club Mirrorball. Best dance floor in Lumen, if you ignore the sticky bits.','Every great disco needs a great disco car. White. Shiny. Smells of hairspray.','There\'s one on a drive up in Palm Terraces. The owner\'s an accountant. He won\'t miss it. Much.','Bring it to the club without a dent. $600, and free entry for life. Tuesdays only.'],
+    brief:['Oh yeah, baby! Disco Dave. Club Mirrorball. Best dance floor in Lumen, if you ignore the sticky bits.','Every great disco needs a great disco car. White. Shiny. Smells of hairspray.','There\'s one on a drive up in Palm Terraces. The owner\'s an accountant. He won\'t miss it. Much.','Bring it to the club without a dent. 600 Kb, and free entry for life. Tuesdays only.'],
     outro:'Look at her shine! I can see my teeth in that bonnet. Here\'s your money, cool cat.',findText:'Find the white convertible in Palm Terraces and nick it.',goText:'Get it to Club Mirrorball. Dents cost you.',stealLine:['The owner saw you!','He\'s chasing you in his wife\'s car']}),
   dd2:tFragile({...ST,name:'Disco Dave · Mirror Ball',title:'The Mirror Ball',pay:700,item:'mirror ball',meterName:'Mirrors',needCar:true,fragile:1.8,from:'old',minD:500,dropAt:()=>ctPos('dave'),timeMul:1.5,
-    brief:['Tragedy! Somebody kicked the mirror ball. Now it\'s a mirror lump.','Arcade Row has a glass blower who made me a new one. Twelve thousand tiny mirrors.','Every bump knocks a few off. Every pothole is seven years\' bad luck. For me.','Bring it back sparkling. Up to $700.'],
+    brief:['Tragedy! Somebody kicked the mirror ball. Now it\'s a mirror lump.','Arcade Row has a glass blower who made me a new one. Twelve thousand tiny mirrors.','Every bump knocks a few off. Every pothole is seven years\' bad luck. For me.','Bring it back sparkling. Up to 700 Kb.'],
     outro:'She\'s beautiful. I might cry. I am crying. Take your money before I hug you.',collectText:'Collect the new mirror ball from the workshop in Arcade Row.',goText:'Get the mirror ball to Club Mirrorball. Gently!',pickLabel:'WORKSHOP',dropLabel:'CLUB',gotLine:['Mirror ball loaded','Twelve thousand mirrors. No pressure'],failMeter:['It\'s a disco brick now','Dave weeps'],failTime:['The doors have opened','They\'re dancing in the dark'],carWarn:'It\'s the size of a sofa. Bring a car'}),
   dd3:tRam({...ST,name:'Disco Dave · DJ Wobble',title:'Wobble Off',pay:800,vkind:'van',col:'#3ff0ff',hp:120,mod:{max:5,acc:.12},label:'DJ WOBBLE',shouts:['WUB WUB WUB!','DISCO IS DEAD!','DROP THE BASS!'],
-    brief:['There\'s a DJ called Wobble driving round in a van with speakers on the roof.','He plays one note. Very loudly. For hours. My customers are leaving to follow him.','Ram that van until the music stops. I\'d like silence. Then the Bee Gees.','$800 for every note he never plays again. Well, $800 in total.'],
+    brief:['There\'s a DJ called Wobble driving round in a van with speakers on the roof.','He plays one note. Very loudly. For hours. My customers are leaving to follow him.','Ram that van until the music stops. I\'d like silence. Then the Bee Gees.','800 Kb for every note he never plays again. Well, 800 Kb in total.'],
     outro:'Sweet silence! Now, where\'s my Bee Gees record? Here\'s your cash, groovy.',startLine:['There goes DJ Wobble!','Make the music stop'],ramText:'Ram DJ Wobble\'s van until it stops.',failLost:['Wobble got away','You can still hear him']}),
   dd4:tSmash({...ST,name:'Disco Dave · Flyers',title:'Flyer War',pay:900,count:6,time:150,place:n=>placeIn('old','stall',n),chasers:[BOUNCERS,BOUNCERS],
-    brief:['Somebody\'s set up stalls all over Arcade Row handing out flyers for a new club. Club Velvet.','Free entry, free drinks, free parking. Disgusting. Nobody gives anything away for free.','Knock the stalls over. All six. Their bouncers will come after you, so be quick.','$900, and I\'ll put your name on the wall. In glitter.'],
+    brief:['Somebody\'s set up stalls all over Arcade Row handing out flyers for a new club. Club Velvet.','Free entry, free drinks, free parking. Disgusting. Nobody gives anything away for free.','Knock the stalls over. All six. Their bouncers will come after you, so be quick.','900 Kb, and I\'ll put your name on the wall. In glitter.'],
     outro:'Club Velvet, eh? I\'ve heard that name before. Posh lady, owns half the city. Keep your ear out, baby.',smashText:'Knock over the Club Velvet flyer stalls in Arcade Row.',smashSub:'Flyers everywhere',doneLine:['Stalls flattened','Here come the bouncers']}),
   dd5:tGetaway({...ST,name:'Disco Dave · Last Dance',title:'Last Dance',pay:1100,where:'tower',wait:5,heat:3,spotLabel:'CLUB VELVET',
-    brief:['That Club Velvet belongs to Velvet Shaw. Lumen\'s biggest, poshest, nastiest businesswoman.','She\'s been stealing my DJs, my dancers and my glitter suppliers. Tonight I steal them back.','Drive me to her club, wait while I grab the turntables, then boogie out of there.','$1,100. And bring your dancing shoes, the police definitely will.'],
+    brief:['That Club Velvet belongs to Velvet Shaw. Lumen\'s biggest, poshest, nastiest businesswoman.','She\'s been stealing my DJs, my dancers and my glitter suppliers. Tonight I steal them back.','Drive me to her club, wait while I grab the turntables, then boogie out of there.','1,100 Kb. And bring your dancing shoes, the police definitely will.'],
     outro:'We got the decks! And Velvet\'s face! She looked like she\'d swallowed a lemon. Go see Pixel Pete in Arcade Row, he hates her too.',parkText:'Park outside Club Velvet and wait for Dave.',waitText:'Dave\'s grabbing the turntables. Hold still.',goLine:['DISCO INFERNO!','Three stars. Get Dave home'],escapeText:'Get Dave back to Club Mirrorball. No coppers.'}),
   /* Pixel Pete */
   px1:tRace({...ST,name:'Pixel Pete · Street Race',title:'Insert Coin',pay:800,rivals:2,rkind:'sport',mod:{max:6,acc:.15},rcols:['#b4ff3f','#ff3fd0'],rnames:['Combo Kid','Lag Larry'],legs:4,where:'old',shouts:['PWNED!','GIT GUD!','LAG!'],
-    brief:['Player two has entered the game! Pixel Pete. I hold the high score on every machine in Arcade Row.','Except one. Real driving. Two kids say I can\'t drive in real life. They\'re right, I can\'t.','So you\'re my avatar. Race them. Win. I\'ll take the credit.','$800 and a free go on Galaxy Smash.'],
+    brief:['Player two has entered the game! Pixel Pete. I hold the high score on every machine in Arcade Row.','Except one. Real driving. Two kids say I can\'t drive in real life. They\'re right, I can\'t.','So you\'re my avatar. Race them. Win. I\'ll take the credit.','800 Kb and a free go on Galaxy Smash.'],
     outro:'HIGH SCORE! My name, obviously. You were player one, I was the brains. Here\'s your money.',startText:'Get to the race start in Arcade Row, in a car.'}),
   px2:tSteal({...ST,name:'Pixel Pete · Prototype',title:'Beta Test',pay:900,kind:'van',col:'#2b2540',where:'tower',heat:1.5,removeCar:true,carName:'prototype van',destLabel:'ARCADE',
     chasers:[{kind:'sedan',col:'#56616f',mod:{max:6,acc:.15},shouts:['NDA VIOLATION!','THAT\'S A TRADE SECRET!','SECURITY!']}],
-    brief:['A games company in the Spires has built a new arcade machine. Holographic, apparently. Smells, apparently.','It\'s sat in a van outside their office waiting to go to Velvet Shaw\'s new mega-arcade.','I want it in my arcade first. Nick the van, bring it here, and don\'t open the back. It bites.','$900, and you can name the machine.'],
-    outro:'It\'s beautiful. It\'s glowing. It\'s, oh, it\'s just a fridge with a sticker on. Still, Velvet hasn\'t got it. $900.',findText:'Find the prototype van in the Spires and nick it.',goText:'Get the van to Pete\'s arcade.',stealLine:['Company security!','They really want their fridge back']}),
+    brief:['A games company in the Spires has built a new arcade machine. Holographic, apparently. Smells, apparently.','It\'s sat in a van outside their office waiting to go to Velvet Shaw\'s new mega-arcade.','I want it in my arcade first. Nick the van, bring it here, and don\'t open the back. It bites.','900 Kb, and you can name the machine.'],
+    outro:'It\'s beautiful. It\'s glowing. It\'s, oh, it\'s just a fridge with a sticker on. Still, Velvet hasn\'t got it. 900 Kb.',findText:'Find the prototype van in the Spires and nick it.',goText:'Get the van to Pete\'s arcade.',stealLine:['Company security!','They really want their fridge back']}),
   px3:tTail({...ST,name:'Pixel Pete · Cheat Codes',title:'Up Up Down Down',pay:1000,vkind:'sedan',col:'#a07bff',near:70,far:380,speed:3.3,label:'ORGANISER',
-    brief:['There\'s a tournament on Saturday. The organiser\'s rigging it so Velvet\'s team wins.','He keeps the rigged joysticks somewhere secret. He\'s driving there now.','Follow him. Not too close, he\'s jumpy. Not too far, he drives like a pensioner.','$1,000 for the location. Then we swap the joysticks for ones that work.'],
+    brief:['There\'s a tournament on Saturday. The organiser\'s rigging it so Velvet\'s team wins.','He keeps the rigged joysticks somewhere secret. He\'s driving there now.','Follow him. Not too close, he\'s jumpy. Not too far, he drives like a pensioner.','1,000 Kb for the location. Then we swap the joysticks for ones that work.'],
     outro:'A lock-up behind a launderette. Classic boss lair. I\'ve swapped the joysticks. Game on.',startLine:['There goes the organiser','Keep your distance'],tailText:'Tail the organiser to his lock-up.',spotted:['He spotted you!','Game over, man'],lostSub:'He took a shortcut'}),
   px4:tFragile({...ST,name:'Pixel Pete · Circuit Board',title:'Save File',pay:1100,item:'circuit board',meterName:'Board',needCar:true,fragile:2,from:'old',to:'tower',dropMin:700,timeMul:1.4,
     chaser:{kind:'sport',col:'#3ff0ff',mod:{max:6.3,acc:.16},shouts:['THAT\'S MY HIGH SCORE!','GIVE IT BACK!','RAGE QUIT!'],line:['It\'s Glitch, Velvet\'s top player!','He wants the board smashed']},
-    brief:['This circuit board holds the all-time high score on Galaxy Smash. My score. Thirty years old.','The tournament hall wants it as proof. Velvet\'s player, Glitch, wants it in the bin.','Every bump could wipe it. A wiped score is a sad Pete.','Up to $1,100, depending on how many digits survive.'],
+    brief:['This circuit board holds the all-time high score on Galaxy Smash. My score. Thirty years old.','The tournament hall wants it as proof. Velvet\'s player, Glitch, wants it in the bin.','Every bump could wipe it. A wiped score is a sad Pete.','Up to 1,100 Kb, depending on how many digits survive.'],
     outro:'All nine digits! The judges cried. Glitch cried. I cried most. Here\'s your money.',collectText:'Collect the circuit board from Pete\'s workshop.',goText:'Get the board to the tournament hall. Don\'t crash!',pickLabel:'WORKSHOP',dropLabel:'TOURNAMENT',gotLine:['Board on board','Do not drop it'],failMeter:['Score wiped','Insert coin to continue'],failTime:['Tournament started without it','Glitch wins by default'],carWarn:'It needs a padded seat. Bring a car'}),
   px5:tRace({...ST,name:'Pixel Pete · Final Boss',title:'Final Boss',pay:1300,rivals:3,rkind:'sport',mod:{max:6.5,acc:.17},rcols:['#ff3fd0','#ff3fd0','#ff3fd0'],rnames:['Glitch','Team Velvet #2','Team Velvet #3'],legs:6,where:'tower',shouts:['VELVET RULES!','YOU\'RE NOT ON THE LIST!','NOOB!'],
-    brief:['The final round of the tournament is a real race. Velvet\'s idea. She thinks it\'ll be a walkover.','Three pink sports cars from Team Velvet. Sponsored, polished, insured.','Beat them all and Velvet looks silly in front of the whole city.','$1,300. Final boss, final payout. For now.'],
+    brief:['The final round of the tournament is a real race. Velvet\'s idea. She thinks it\'ll be a walkover.','Three pink sports cars from Team Velvet. Sponsored, polished, insured.','Beat them all and Velvet looks silly in front of the whole city.','1,300 Kb. Final boss, final payout. For now.'],
     outro:'VICTORY SCREEN! Velvet stormed off. Captain Bev down at the docks wants a word, by the way. Says Velvet\'s been sinking her business.',startText:'Get to the race start in the Strip, in a car.'}),
   /* Captain Bev */
   bv1:tFragile({...ST,name:'Captain Bev · Lobsters',title:'Shellfish Reasons',pay:1000,item:'lobsters',meterName:'Lobsters',needCar:true,fragile:.9,pickAt:()=>ptIn('dock',P,100,700,true),to:'tower',dropMin:700,timeMul:1.2,
-    brief:['Alright, petal. Captain Bev. Tugboat Tilly\'s my boat, and Tilly\'s my name too. Confusing, innit.','I\'ve got a crate of live lobsters for the posh restaurant on the Strip. They\'re a lively bunch.','Brake hard and they escape. Crash and they\'re lobster thermidor. Be quick, they\'re getting ideas.','Up to $1,000, one for every lobster that makes it. Roughly.'],
+    brief:['Alright, petal. Captain Bev. Tugboat Tilly\'s my boat, and Tilly\'s my name too. Confusing, innit.','I\'ve got a crate of live lobsters for the posh restaurant on the Strip. They\'re a lively bunch.','Brake hard and they escape. Crash and they\'re lobster thermidor. Be quick, they\'re getting ideas.','Up to 1,000 Kb, one for every lobster that makes it. Roughly.'],
     outro:'Every claw accounted for! Well, most claws. Here you go, my lovely.',collectText:'Collect the lobsters from Bev\'s boat at the docks.',goText:'Get the lobsters to the restaurant on the Strip.',pickLabel:'TUGBOAT',dropLabel:'RESTAURANT',gotLine:['Lobsters aboard','They\'re snapping at the seats'],failMeter:['The lobsters escaped','They\'re heading for the sea'],failTime:['Dinner service is over','Fish fingers it is'],carWarn:'You can\'t carry forty lobsters, petal'}),
   bv2:tRam({...ST,name:'Captain Bev · Pirate Radio',title:'Radio Shanty',pay:1100,vkind:'van',col:'#3a3f48',hp:140,mod:{max:5.2,acc:.13},label:'PIRATE RADIO',shouts:['YO HO HO!','SHANTY TIME!','HEAVE AWAY!','NOW WITH MORE ACCORDION!'],
-    brief:['Some joker\'s driving round with a radio transmitter playing sea shanties on every channel.','My boat radio, the coastguard\'s, the ferry\'s. Everyone\'s singing. Nobody\'s working.','Ram that van until it\'s a bucket. Then sink the bucket.','$1,100. And a free shanty. Sorry. Couldn\'t help it.'],
+    brief:['Some joker\'s driving round with a radio transmitter playing sea shanties on every channel.','My boat radio, the coastguard\'s, the ferry\'s. Everyone\'s singing. Nobody\'s working.','Ram that van until it\'s a bucket. Then sink the bucket.','1,100 Kb. And a free shanty. Sorry. Couldn\'t help it.'],
     outro:'Peace and quiet at last. Oh no. I\'ve got it stuck in my head now. Here\'s your money.',startLine:['There goes the pirate radio van!','Ram it till the singing stops'],ramText:'Ram the pirate radio van until it stops.',failLost:['The van got away','Heave away, haul away...']}),
   bv3:tSmash({...ST,name:'Captain Bev · Customs',title:'Duty Free',pay:1200,count:5,time:140,place:n=>placeIn('dock','stall',n),chasers:[{kind:'sedan',col:'#1d3a8a',mod:{max:6.1,acc:.15},shouts:['ANYTHING TO DECLARE?','STOP!','THAT\'S A FINE!']}],heatEach:.4,
-    brief:['Velvet Shaw\'s paid for new customs huts all over my docks. Everything I land gets taxed twice.','Once by the council and once by Velvet. And once more by her mum, probably.','Knock all five huts flat. Then lose the inspectors. They\'re keen, but they\'re slow.','$1,200. Duty free.'],
+    brief:['Velvet Shaw\'s paid for new customs huts all over my docks. Everything I land gets taxed twice.','Once by the council and once by Velvet. And once more by her mum, probably.','Knock all five huts flat. Then lose the inspectors. They\'re keen, but they\'re slow.','1,200 Kb. Duty free.'],
     outro:'Not a hut left standing! You\'re a natural disaster, you are. Here, take this.',smashText:'Smash Velvet\'s customs huts on the docks.',smashSub:'Nothing to declare',doneLine:['Huts flattened','Customs are after you']}),
   bv4:tSteal({...ST,name:'Captain Bev · Harbourmaster',title:'Shore Leave',pay:1300,kind:'van',col:'#f4f1ea',where:'dock',heat:2,dmgPay:true,carName:'harbourmaster\'s van',destLabel:'TUGBOAT',
     chasers:[{kind:'sedan',col:'#1f5f8b',mod:{max:6.2,acc:.15},shouts:['THAT\'S OFFICIAL PROPERTY!','STOP IN THE NAME OF THE HARBOUR!','MY SANDWICHES ARE IN THERE!']}],
-    brief:['The harbourmaster\'s in Velvet\'s pocket. He keeps the master keys to every dock in his van.','Nick the van and I can open the gates whenever I like.','He\'ll chase you. He takes his lunch very seriously and it\'s in the back.','$1,300. Fewer dents, more money.'],
+    brief:['The harbourmaster\'s in Velvet\'s pocket. He keeps the master keys to every dock in his van.','Nick the van and I can open the gates whenever I like.','He\'ll chase you. He takes his lunch very seriously and it\'s in the back.','1,300 Kb. Fewer dents, more money.'],
     outro:'Keys! And a cheese and pickle sandwich. Lovely. Here\'s your cut.',findText:'Find the harbourmaster\'s van at the docks and nick it.',goText:'Get the van to Bev\'s tugboat.',stealLine:['The harbourmaster\'s after you!','Mind his sandwiches']}),
   bv5:tGetaway({...ST,name:'Captain Bev · Low Tide',title:'Low Tide',pay:1500,where:'dock',wait:6,heat:3,spotLabel:'WAREHOUSE',
-    brief:['Velvet\'s got a warehouse on the docks stuffed with everything she\'s pinched from me.','Tonight, at low tide, I\'m taking it back. I need a driver and a big boot.','Park outside, wait while I load up, then drive like the tide\'s coming in.','$1,500, petal. Batten down the hatches.'],
+    brief:['Velvet\'s got a warehouse on the docks stuffed with everything she\'s pinched from me.','Tonight, at low tide, I\'m taking it back. I need a driver and a big boot.','Park outside, wait while I load up, then drive like the tide\'s coming in.','1,500 Kb, petal. Batten down the hatches.'],
     outro:'Got the lot! Velvet\'s going to be fuming. Madame Zola on the Strip saw this coming, she says. She sees everything coming.',parkText:'Park outside Velvet\'s warehouse and wait for Bev.',waitText:'Bev\'s loading the boot. Hold still.',goLine:['ALL HANDS!','Three stars. Get Bev back to her boat'],escapeText:'Get Bev back to her tugboat. No coppers.'}),
   /* Madame Zola */
   mz1:tGetaway({...ST,name:'Madame Zola · I Foresaw This',title:'I Foresaw This',pay:1200,where:'tower',wait:4,heat:2.5,spotLabel:'JEWELLERS',
-    brief:['I knew you would come. Also you parked in my disabled space. I foresaw that too.','Madame Zola reads palms, tea leaves and the getaway route. I am the fastest wheelwoman in Lumen.','But my car is in the garage. So tonight, you drive. A jewellery shop. Diamonds. You wait, I return.','$1,200. The spirits insist.'],
+    brief:['I knew you would come. Also you parked in my disabled space. I foresaw that too.','Madame Zola reads palms, tea leaves and the getaway route. I am the fastest wheelwoman in Lumen.','But my car is in the garage. So tonight, you drive. A jewellery shop. Diamonds. You wait, I return.','1,200 Kb. The spirits insist.'],
     outro:'The crystals told me we would escape. Also the crystals are now in my handbag. Your fee.',parkText:'Park outside the jewellers and wait for Zola.',waitText:'Zola is "consulting the diamonds". Hold still.',goLine:['THE SPIRITS SAY DRIVE!','Get Zola home'],escapeText:'Get Zola back to her parlour. Lose the cops.'}),
   mz2:tRace({...ST,name:'Madame Zola · Crystal Clear',title:'Crystal Clear',pay:1300,rivals:2,rkind:'sport',mod:{max:6.4,acc:.16},rcols:['#a07bff','#3a2a5c'],rnames:['Clairvoyant Clive','Tarot Tina'],legs:5,where:'tower',shouts:['I SAW YOU LOSE!','THE CARDS SAY NO!','I\'M PSYCHIC, MOVE!'],
-    brief:['Two rival psychics say they are faster than me. They have seen it in their crystal balls.','Their crystal balls are wrong. Mine is right, and also more expensive.','Race them. Win. Prove that the future belongs to Zola.','$1,300. I knew you would say yes.'],
+    brief:['Two rival psychics say they are faster than me. They have seen it in their crystal balls.','Their crystal balls are wrong. Mine is right, and also more expensive.','Race them. Win. Prove that the future belongs to Zola.','1,300 Kb. I knew you would say yes.'],
     outro:'Ha! Clive did not see that coming. Nobody ever does, with Clive.',startText:'Get to the race start on the Strip, in a car.'}),
   mz3:tTail({...ST,name:'Madame Zola · Palm Reading',title:'Palm Reading',pay:1400,vkind:'sedan',col:'#2b2540',near:75,far:400,speed:3.5,label:'ACCOUNTANT',
-    brief:['Velvet Shaw\'s accountant came for a reading. His palm said "secret office".','Also "dodgy books" and "needs moisturiser".','He is leaving now. Follow him. He will lead us to Velvet\'s money.','$1,400 for your discretion. And your hands are very nice, by the way.'],
+    brief:['Velvet Shaw\'s accountant came for a reading. His palm said "secret office".','Also "dodgy books" and "needs moisturiser".','He is leaving now. Follow him. He will lead us to Velvet\'s money.','1,400 Kb for your discretion. And your hands are very nice, by the way.'],
     outro:'A secret office behind a car wash. The palm never lies. Here.',startLine:['There goes the accountant','Keep a respectful distance'],tailText:'Tail Velvet\'s accountant to his secret office.',spotted:['He saw you!','His palm warned him'],lostSub:'He vanished. Spooky'}),
   mz4:tRam({...ST,name:'Madame Zola · Bad Omen',title:'Bad Omen',pay:1500,vkind:'sedan',col:'#111114',hp:170,mod:{max:6.3,acc:.15},label:'CRYSTAL THIEF',shouts:['IT\'S MINE NOW!','YOUR FUTURE IS CANCELLED!','WOOOOO!'],drop:600,
-    brief:['Someone has stolen my crystal ball! Velvet\'s fake psychic, Madame Mystique. Her name is Sharon.','She is driving a black car full of my things. And my cat. The cat came willingly.','Stop her car. Hard. My crystal ball is very well padded.','$1,500, plus whatever falls out of her pockets.'],
+    brief:['Someone has stolen my crystal ball! Velvet\'s fake psychic, Madame Mystique. Her name is Sharon.','She is driving a black car full of my things. And my cat. The cat came willingly.','Stop her car. Hard. My crystal ball is very well padded.','1,500 Kb, plus whatever falls out of her pockets.'],
     outro:'My crystal ball! My cat! My cat has opinions about your driving. Your money.',startLine:['There goes Sharon!','Ram her till she stops'],ramText:'Ram Madame Mystique\'s car until it stops.',failLost:['Sharon got away','She didn\'t see that coming either']}),
   mz5:tSteal({...ST,name:'Madame Zola · The Big Prediction',title:'The Big Prediction',pay:1700,kind:'van',col:'#c9a227',where:'tower',heat:3,removeCar:true,carName:'Velvet\'s cash van',destLabel:'ZOLA\'S PARLOUR',
     chasers:[BOUNCERS,{kind:'sedan',col:'#1c1c24',mod:{max:6.3,acc:.16},shouts:['THAT\'S VELVET\'S MONEY!','STOP THAT VAN!','YOU\'RE FINISHED!']}],
-    brief:['I have made a big prediction. Velvet Shaw\'s gold cash van will be stolen tonight.','By you. That part is very clear in the crystal.','It is parked in the Strip. Her heavies will chase you. Lose them or outrun them, the future is flexible.','$1,700. The rest goes to charity. My charity.'],
+    brief:['I have made a big prediction. Velvet Shaw\'s gold cash van will be stolen tonight.','By you. That part is very clear in the crystal.','It is parked in the Strip. Her heavies will chase you. Lose them or outrun them, the future is flexible.','1,700 Kb. The rest goes to charity. My charity.'],
     outro:'Exactly as predicted. I see a posh lady in Palm Terraces in your future. She has a poodle and a problem.',findText:'Find Velvet\'s gold cash van in the Strip and nick it.',goText:'Get the cash van to Zola\'s parlour.',stealLine:['Velvet\'s heavies are after you!','The future looks bumpy']}),
   /* Lady Featherstonehaugh */
   lf1:tRam({...ST,name:'Lady F · Poodle',title:'Poodle Napped',pay:1400,vkind:'van',col:'#7a5a46',hp:150,mod:{max:5.6,acc:.14},label:'DOGNAPPER',shouts:['THE POODLE BITES!','GET OFF, YOU FLUFFY BEAST!','RANSOM\'S DOUBLED!'],
-    brief:['Lady Featherstonehaugh. It\'s pronounced "Fanshaw". Nobody knows why. Least of all me.','Some ghastly little man has snatched Fifi, my prize poodle. He\'s in a brown van. Brown!','Stop the van. Fifi will do the rest. She bites.','$1,400. Fifi\'s worth far more, of course. But that\'s all the cash I have on me.'],
+    brief:['Lady Featherstonehaugh. It\'s pronounced "Fanshaw". Nobody knows why. Least of all me.','Some ghastly little man has snatched Fifi, my prize poodle. He\'s in a brown van. Brown!','Stop the van. Fifi will do the rest. She bites.','1,400 Kb. Fifi\'s worth far more, of course. But that\'s all the cash I have on me.'],
     outro:'Fifi! My darling! She\'s eaten his trousers. Good girl. Your fee, young person.',startLine:['There goes the dognapper!','Ram the brown van'],ramText:'Ram the dognapper\'s van until it stops.',failLost:['The dognapper got away','Fifi will bite her way out eventually']}),
   lf2:tSmash({...ST,name:'Lady F · Flamingos',title:'Pink Peril',pay:1500,count:8,time:150,place:placeFlamingos,
-    brief:['The neighbours have put plastic flamingos in their front gardens. Pink. Plastic. Flamingos.','In Palm Terraces! It\'s like living next to a fairground.','Flatten eight of them before my garden party this afternoon.','$1,500 for restoring good taste.'],
+    brief:['The neighbours have put plastic flamingos in their front gardens. Pink. Plastic. Flamingos.','In Palm Terraces! It\'s like living next to a fairground.','Flatten eight of them before my garden party this afternoon.','1,500 Kb for restoring good taste.'],
     outro:'Not a flamingo in sight. One can breathe again. Do help yourself to a cucumber sandwich.',smashText:'Flatten the plastic flamingos in Palm Terraces.',smashSub:'Pink peril defeated',doneLine:['Flamingos flattened','Back to Lady F']}),
   lf3:tFragile({...ST,name:'Lady F · The Egg',title:'Fabergé-ish',pay:1600,item:'egg',meterName:'Egg',needCar:true,fragile:2.4,pickAt:()=>ctPos('lady'),to:'tower',dropMin:900,timeMul:1.4,
     chaser:{kind:'sport',col:'#ff3fd0',mod:{max:6.5,acc:.16},shouts:['THAT EGG IS MINE!','DARLING, STOP!','I BID FIRST!'],line:['Velvet\'s after the egg!','She wants it for her collection']},
-    brief:['Grandmother\'s jewelled egg goes to auction today. It\'s almost certainly real. Probably.','The auction house is in the Spires. The egg is very, very old.','Treat it like an egg, because it is one. Velvet Shaw has her eye on it, so be quick.','Up to $1,600, depending on how much egg arrives.'],
+    brief:['Grandmother\'s jewelled egg goes to auction today. It\'s almost certainly real. Probably.','The auction house is in the Spires. The egg is very, very old.','Treat it like an egg, because it is one. Velvet Shaw has her eye on it, so be quick.','Up to 1,600 Kb, depending on how much egg arrives.'],
     outro:'Sold! To a lovely gentleman, not Velvet. She stormed out and broke a chandelier. Wonderful.',collectText:'Collect the egg from Lady F\'s villa.',goText:'Get the egg to the auction house. Gently!',pickLabel:'VILLA',dropLabel:'AUCTION',gotLine:['The egg is aboard','Please. Gently'],failMeter:['Scrambled','Lady F faints'],failTime:['The auction is over','Lot 47 withdrawn'],carWarn:'One does not carry an egg on foot'}),
   lf4:tTail({...ST,name:'Lady F · The Butler',title:'The Butler Did It',pay:1700,vkind:'sedan',col:'#1c1c20',near:70,far:400,speed:3.4,label:'JENKINS',
-    brief:['The silver keeps vanishing. Forks, spoons, a candelabra the size of a child.','I suspect Jenkins. Thirty years he\'s buttled for me. Never trust a man who buttles.','He\'s taking the car out now. Follow him and see where my spoons go.','$1,700. And do be discreet. Butlers are terribly sensitive.'],
+    brief:['The silver keeps vanishing. Forks, spoons, a candelabra the size of a child.','I suspect Jenkins. Thirty years he\'s buttled for me. Never trust a man who buttles.','He\'s taking the car out now. Follow him and see where my spoons go.','1,700 Kb. And do be discreet. Butlers are terribly sensitive.'],
     outro:'Velvet Shaw\'s pawn shop! Jenkins, you rotter. I shall have words. Several, all of them long.',startLine:['There goes Jenkins','Discreetly now'],tailText:'Tail Jenkins the butler to wherever the silver goes.',spotted:['Jenkins spotted you','He raised one eyebrow'],lostSub:'Jenkins took the scenic route'}),
   lf5:tGetaway({...ST,name:'Lady F · High Tea',title:'High Tea',pay:1900,where:'house',wait:6,heat:3,spotLabel:'VELVET\'S VILLA',
-    brief:['Velvet Shaw is throwing a garden party in her villa. She\'s wearing my mother\'s pearls.','My mother\'s pearls! I\'m going in to get them back, and possibly the scones.','You wait outside with the engine running. Then we flee. Elegantly.','$1,900. Chin up.'],
+    brief:['Velvet Shaw is throwing a garden party in her villa. She\'s wearing my mother\'s pearls.','My mother\'s pearls! I\'m going in to get them back, and possibly the scones.','You wait outside with the engine running. Then we flee. Elegantly.','1,900 Kb. Chin up.'],
     outro:'Pearls, scones and a very startled Velvet! What fun. Rupert Moneypenny-Crisp in the Spires banks for her. He\'s a dreadful man, but he might help you.',parkText:'Park outside Velvet\'s villa and wait for Lady F.',waitText:'Lady F is retrieving the pearls. Hold still.',goLine:['TALLY HO!','Get Lady F home'],escapeText:'Get Lady F back to her villa. No coppers.'}),
   /* Rupert Moneypenny-Crisp */
   rm1:tFragile({...ST,name:'Rupert · Shredder',title:'Shredder Emergency',pay:1700,item:'paperwork',meterName:'Papers',needCar:true,pickAt:()=>ctPos('rupert'),dropAt:()=>ptIn('dock',P,800,99999,true),timeMul:1,
     chaser:{kind:'sedan',col:'#b8bec6',mod:{max:6.1,acc:.15},shouts:['AUDIT!','WE\'D LIKE A WORD!','HAND OVER THOSE FILES!'],line:['The auditors are on to you!','Don\'t let them catch up']},
-    brief:['Rupert Moneypenny-Crisp, private banking. Discreet, reliable, slightly on fire.','The auditors are coming. I have a boot full of paperwork that must meet a shredder very soon.','The industrial shredder is down at the docks. Please hurry. Please don\'t read anything.','$1,700. Cash. Obviously cash.'],
+    brief:['Rupert Moneypenny-Crisp, private banking. Discreet, reliable, slightly on fire.','The auditors are coming. I have a boot full of paperwork that must meet a shredder very soon.','The industrial shredder is down at the docks. Please hurry. Please don\'t read anything.','1,700 Kb. Cash. Obviously cash.'],
     outro:'Confetti! Beautiful, untraceable confetti. Here\'s your fee. Don\'t put it in a bank.',collectText:'Collect the paperwork from Rupert\'s office.',goText:'Get the paperwork to the shredder at the docks.',pickLabel:'BANK',dropLabel:'SHREDDER',gotLine:['Paperwork loaded','Don\'t read it'],failTime:['The auditors got there first','Rupert is sweating'],carWarn:'There\'s forty boxes. Bring a car'}),
   rm2:tSteal({...ST,name:'Rupert · Golden Parachute',title:'Golden Parachute',pay:1800,kind:'sport',col:'#d4af37',where:'tower',heat:2,dmgPay:true,carName:'gold sports car',destLabel:'RUPERT\'S BANK',
     chasers:[{kind:'sedan',col:'#1c1c24',mod:{max:6.3,acc:.16},shouts:['THAT\'S THE CHAIRMAN\'S!','STOP!','HE\'LL HAVE OUR JOBS!']}],
-    brief:['My chairman is retiring with a golden parachute. Including a golden sports car.','It\'s my golden sports car. I was promised it at the Christmas party. It\'s in writing. On a napkin.','Collect it from the bank car park. His drivers will object.','$1,800. Fewer dents, more money. It\'s a depreciating asset.'],
+    brief:['My chairman is retiring with a golden parachute. Including a golden sports car.','It\'s my golden sports car. I was promised it at the Christmas party. It\'s in writing. On a napkin.','Collect it from the bank car park. His drivers will object.','1,800 Kb. Fewer dents, more money. It\'s a depreciating asset.'],
     outro:'Mine at last! It smells of cigars and regret. Lovely. Here you are.',findText:'Find the chairman\'s gold sports car in the Spires.',goText:'Get it to Rupert\'s bank. Dents cost you.',stealLine:['The chairman\'s drivers!','They want it back']}),
   rm3:tRam({...ST,name:'Rupert · Hostile Takeover',title:'Hostile Takeover',pay:1900,vkind:'van',col:'#3a4a5e',hp:180,mod:{max:5.6,acc:.14},label:'BOND VAN',shouts:['HANDS OFF MY BONDS!','THIS IS A HOSTILE ACT!','I\'LL SUE!'],drop:800,
-    brief:['A rival bank is moving a van full of bonds to Velvet Shaw\'s vault.','A hostile takeover, they call it. I call it rude.','Ram the van open. Bonds go everywhere. Some of them go in your pocket. I didn\'t say that.','$1,900, plus whatever blows your way.'],
+    brief:['A rival bank is moving a van full of bonds to Velvet Shaw\'s vault.','A hostile takeover, they call it. I call it rude.','Ram the van open. Bonds go everywhere. Some of them go in your pocket. I didn\'t say that.','1,900 Kb, plus whatever blows your way.'],
     outro:'Markets in turmoil! Excellent. Turmoil is when men like me get rich. Your fee.',startLine:['There goes the bond van!','Ram it open'],ramText:'Ram the bond van until it stops.',failLost:['The bonds got away','Into Velvet\'s vault']}),
   rm4:tRace({...ST,name:'Rupert · Bull Market',title:'Bull Market',pay:2000,rivals:3,rkind:'sport',mod:{max:6.7,acc:.17},rcols:['#d4af37','#56616f','#9be27a'],rnames:['Hedge Fund Henry','Bear Market Barbara','Crypto Kevin'],legs:6,where:'tower',shouts:['BUY! BUY! BUY!','SELL!','TO THE MOON!'],
-    brief:['Every year the Spires bankers race their bonus cars round the city. The winner takes the pot.','I\'ve never won. I\'ve never finished, in fact. I always stop to check the markets.','Drive my entry. Win the pot. I\'ll keep the trophy, you keep a share.','$2,000. A very generous share, by banking standards.'],
+    brief:['Every year the Spires bankers race their bonus cars round the city. The winner takes the pot.','I\'ve never won. I\'ve never finished, in fact. I always stop to check the markets.','Drive my entry. Win the pot. I\'ll keep the trophy, you keep a share.','2,000 Kb. A very generous share, by banking standards.'],
     outro:'Winner! I\'ve never won anything I didn\'t pay for. Here\'s your share.',startText:'Get to the race start in the Spires, in a car.'}),
   rm5:tGetaway({...ST,name:'Rupert · Insider Trading',title:'Insider Trading',pay:2400,where:'tower',wait:7,heat:4,spotLabel:'VELVET\'S VAULT',
-    brief:['Velvet Shaw banks with me. Or she did. She\'s moving everything to her own vault tonight.','I have the combination. I am, as they say, an insider.','Drive me to the vault, wait, then get us both very far away very quickly.','$2,400. Swifty at the courier depot says Velvet\'s been nicking his parcels too. Speak to him after.'],
+    brief:['Velvet Shaw banks with me. Or she did. She\'s moving everything to her own vault tonight.','I have the combination. I am, as they say, an insider.','Drive me to the vault, wait, then get us both very far away very quickly.','2,400 Kb. Swifty at the courier depot says Velvet\'s been nicking his parcels too. Speak to him after.'],
     outro:'We\'re rich! Well, I\'m rich. You\'re moderately comfortable. Go and see Swifty.',parkText:'Park outside Velvet\'s vault and wait for Rupert.',waitText:'Rupert is cracking the vault. Hold still.',goLine:['MARKET CRASH!','Four stars. Get Rupert to his bank'],escapeText:'Get Rupert back to his bank. Lose the cops.'}),
   /* Swifty */
   sw1:tFragile({...ST,name:'Swifty · Next Day',title:'Next Day Delivery',pay:1900,item:'parcel',meterName:'Parcel',needCar:true,pickAt:()=>ctPos('swifty'),to:'house',dropMin:1100,timeMul:.95,
-    brief:['Swifty. Swift & Shifty Couriers. I\'ve got the Kingsgate depot and this one. You\'ve done my daily run, so you know the score.','Next-day delivery, guaranteed. Except this one was booked yesterday. So it\'s late already.','Get it to Palm Terraces before the customer phones the complaints line. That\'s me. I answer it.','$1,900. Swift, not shifty.'],
+    brief:['Swifty. Swift & Shifty Couriers. I\'ve got the Kingsgate depot and this one. You\'ve done my daily run, so you know the score.','Next-day delivery, guaranteed. Except this one was booked yesterday. So it\'s late already.','Get it to Palm Terraces before the customer phones the complaints line. That\'s me. I answer it.','1,900 Kb. Swift, not shifty.'],
     outro:'Delivered on time! Well, a day late, but on time for being late. Cheers.',collectText:'Collect the parcel from Swifty\'s depot.',goText:'Deliver the parcel to Palm Terraces. Fast!',pickLabel:'DEPOT',dropLabel:'CUSTOMER',gotLine:['Parcel loaded','The clock\'s ticking'],failTime:['Too late','The customer\'s gone out'],carWarn:'Van or car, mate. Not your arms'}),
   sw2:tRam({...ST,name:'Swifty · Porch Pirate',title:'Porch Pirate',pay:2000,vkind:'van',col:'#ff3fd0',hp:170,mod:{max:5.8,acc:.15},label:'PORCH PIRATE',shouts:['FINDERS KEEPERS!','IT WAS ON THE STEP!','VELVET PAYS BETTER!'],drop:700,
-    brief:['Someone\'s nicking my parcels off doorsteps. Pink van. Pink! Velvet\'s colours.','Fifty parcels this week. Half of them were for my nan.','Ram the van till it stops. Whatever falls out, keep a bit.','$2,000. My nan says thanks.'],
+    brief:['Someone\'s nicking my parcels off doorsteps. Pink van. Pink! Velvet\'s colours.','Fifty parcels this week. Half of them were for my nan.','Ram the van till it stops. Whatever falls out, keep a bit.','2,000 Kb. My nan says thanks.'],
     outro:'All the parcels back. Mostly. One was a cake. It\'s a flat cake now. Here.',startLine:['There goes the porch pirate!','Ram the pink van'],ramText:'Ram the porch pirate\'s van until it stops.',failLost:['The pirate got away','Check your doorstep']}),
   sw3:tFragile({...ST,name:'Swifty · Signed For',title:'Signed For',pay:2100,item:'glass sculpture',meterName:'Sculpture',needCar:true,fragile:1.6,pickAt:()=>ctPos('swifty'),to:'old',dropMin:900,timeMul:1.3,
     chaser:{kind:'sport',col:'#ff3fd0',mod:{max:6.4,acc:.16},shouts:['THAT\'S FOR VELVET!','HAND IT OVER!','DELIVER IT TO US!'],line:['Velvet\'s lot want it!','They\'re trying to intercept']},
-    brief:['A glass sculpture, needs a signature at the other end. Arcade Row gallery.','Velvet\'s tried to buy it. The artist said no. Velvet doesn\'t like no.','Every bump puts a crack in it. Cracks don\'t get signed for.','Up to $2,100.'],
+    brief:['A glass sculpture, needs a signature at the other end. Arcade Row gallery.','Velvet\'s tried to buy it. The artist said no. Velvet doesn\'t like no.','Every bump puts a crack in it. Cracks don\'t get signed for.','Up to 2,100 Kb.'],
     outro:'Signed, sealed, delivered. The artist cried. Good crying. Here\'s your money.',collectText:'Collect the sculpture from Swifty\'s depot.',goText:'Deliver the sculpture to the gallery. Gently!',pickLabel:'DEPOT',dropLabel:'GALLERY',gotLine:['Sculpture loaded','Gently does it'],failMeter:['It\'s in pieces','Modern art now'],failTime:['The gallery closed','Return to sender'],carWarn:'You can\'t carry glass that size'}),
   sw4:tTail({...ST,name:'Swifty · Return to Sender',title:'Return to Sender',pay:2200,vkind:'van',col:'#ff3fd0',near:80,far:420,speed:3.5,label:'VELVET\'S VAN',
-    brief:['Velvet\'s running her own courier firm now. Velvet Express. Stolen vans, stolen parcels, stolen customers.','One of her vans is heading back to her secret depot. Follow it.','Find the depot and we can take back everything she\'s nicked. From both of us.','$2,200.'],
+    brief:['Velvet\'s running her own courier firm now. Velvet Express. Stolen vans, stolen parcels, stolen customers.','One of her vans is heading back to her secret depot. Follow it.','Find the depot and we can take back everything she\'s nicked. From both of us.','2,200 Kb.'],
     outro:'Right under her penthouse in the Spires. Of course it is. Time to finish this, mate.',startLine:['There goes Velvet\'s van','Not too close'],tailText:'Tail Velvet\'s van to her secret depot.',spotted:['The driver spotted you!','He\'s phoned Velvet'],lostSub:'The van lost you'}),
   sw5:tSmash({...ST,name:'Swifty · Out for Delivery',title:'Out for Delivery',pay:2500,count:5,time:160,place:n=>placeIn('tower','sign',n,{txt:'VELVET'}),chasers:[BOUNCERS,BOUNCERS],heatEach:.5,
-    brief:['Velvet Express has neon billboards all over the Strip. Pink, glowing, enormous.','Every one says "Faster than Swifty". It is not faster than Swifty.','Smash all five signs. Her heavies will come. Lose them, then come back here.','$2,500. And then, mate, everyone wants a word. All of us. Both cities.'],
+    brief:['Velvet Express has neon billboards all over the Strip. Pink, glowing, enormous.','Every one says "Faster than Swifty". It is not faster than Swifty.','Smash all five signs. Her heavies will come. Lose them, then come back here.','2,500 Kb. And then, mate, everyone wants a word. All of us. Both cities.'],
     outro:'Lights out on Velvet Express! Right. Del Rossi\'s phoned. Your Kingsgate lot want in. Head to the meeting point when you\'re ready.',smashText:'Smash Velvet Express\'s neon billboards.',smashSub:'Lights out',doneLine:['Billboards smashed','Here come her heavies']}),
 });
 /* the finale: Lights Out */
 JOBS.lfin={kind:'story',name:'Lights Out',title:'Lights Out',pay:40000,
   brief:['SWIFTY: Right, everyone\'s here. Lumen\'s finest, and Del\'s lot just off the ferry.','DEL ROSSI: Velvet Shaw is Shifty\'s big sister. Same family, bigger handbag. She\'s been funding him all along.','DISCO DAVE: She took my DJs! PIXEL PETE: She rigged my tournament! CAPTAIN BEV: She sank my business!',
     'MADAME ZOLA: I have seen the future. In it, Velvet\'s penthouse has no neon signs. And she has no limo.','LADY F: Do smash things politely, dear. RUPERT: And quickly. My lawyers bill by the minute.',
-    'NANA RUTH: Meet Del\'s crew at the ferry first, love. They\'ll keep the coppers busy while you work.','SWIFTY: $40,000 from all of us. Lights out for Velvet.'],
+    'NANA RUTH: Meet Del\'s crew at the ferry first, love. They\'ll keep the coppers busy while you work.','SWIFTY: 40,000 Kb from all of us. Lights out for Velvet.'],
   outro:['DEL ROSSI: You did it! Velvet\'s limo is a pink pancake and she\'s fled to her mum\'s in Margate. Same as Shifty. Family tradition.','DISCO DAVE: Lumen\'s free! Party at Club Mirrorball! Everyone\'s invited. Except Velvet.',
     'CAPTAIN BEV: I\'m naming my next tugboat after you, petal. MADAME ZOLA: I foresaw this, obviously.','LADY F: Splendid. RUPERT: Profitable. PIXEL PETE: Achievement unlocked!','NANA RUTH: I\'ve baked you a cake for the ferry home, dear. Don\'t drive with it.','THE END... ish. Both cities are yours to wreck.'],
   start(){return{stage:'ferry',chasers:[],props:[],lost:0}},
@@ -1489,7 +1490,7 @@ function update(dt){
   }else{bustT=0;copsSee=copsSaw=false}
   sprayCD-=dt;
   if(P.car&&sprayCD<=0&&dist(P.x,P.y,SPRAY.x,SPRAY.y)<34){
-    if(heat>=1||P.car.hp<P.car.spec.hp){if(cash>=875){stat('spray');cash-=875;heat=0;P.car.hp=P.car.spec.hp;if(P.car.kind!=='cop')P.car.col=pick(CAR_COLS.filter(x=>x!==P.car.col));toast('Fresh paint','−$875 · heat cleared')}else toast('Respray is $875','Come back with cash')}
+    if(heat>=1||P.car.hp<P.car.spec.hp){if(cash>=875){stat('spray');cash-=875;heat=0;P.car.hp=P.car.spec.hp;if(P.car.kind!=='cop')P.car.col=pick(CAR_COLS.filter(x=>x!==P.car.col));toast('Fresh paint','−875 Kb · heat cleared')}else toast('Respray is 875 Kb','Come back with K-Buks')}
     sprayCD=4}
   missionCD-=dt;
   timeTick(dt);combatTick(dt);storyCheck();courierTick();serviceCheck();eventCheck();raidTick();
@@ -1596,7 +1597,7 @@ function render(t){
   const gx0=clamp(Math.floor(vx0),0,MW),gy0=clamp(Math.floor(vy0),0,MW),gx1=clamp(Math.ceil(vx1),0,MW),gy1=clamp(Math.ceil(vy1),0,MW);
   drawGround(vx0,vy0,vx1,vy1);
   ctx.save();ctx.translate(SPRAY.x,SPRAY.y);ctx.fillStyle='rgba(60,180,110,.22)';ctx.fillRect(-30,-30,60,60);ctx.strokeStyle='#3cb46e';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.strokeRect(-30,-30,60,60);ctx.setLineDash([]);
-  ctx.fillStyle='#3cb46e';ctx.font='700 9px "Chivo Mono",monospace';ctx.textAlign='center';ctx.fillText('RESPRAY $875',0,-36);ctx.restore();
+  ctx.fillStyle='#3cb46e';ctx.font='700 9px "Chivo Mono",monospace';ctx.textAlign='center';ctx.fillText('RESPRAY 875 Kb',0,-36);ctx.restore();
   for(const b of BOOTHS){if(!mission)marker(b.x,b.y,'#ffd23f',t,b.label);ctx.fillStyle='#ffd23f';ctx.fillRect(b.x-5,b.y-7,10,14);ctx.fillStyle='#1c1e25';ctx.fillRect(b.x-3,b.y-5,6,5)}
   drawServices();for(const p of props)if(!p.hit)drawProp(p,t);
   if(!mission)for(const ct of CONTACTS)if((story[ct.id]||0)<ct.chain.length){const lk=level()<(ct.lvl||1)||(ct.req&&!ct.req());if(lk){drawSign(ct.pos.x,ct.pos.y,'#777',ct.face,ct.lockLabel||`${ct.name.toUpperCase()} · LVL ${ct.lvl}`,true);continue}marker(ct.pos.x,ct.pos.y,ct.col,t,ct.name.toUpperCase());ctx.fillStyle=ct.col;ctx.beginPath();ctx.arc(ct.pos.x,ct.pos.y,8,0,7);ctx.fill();ctx.fillStyle='#1a0f1e';ctx.font='700 8px "Chivo Mono",monospace';ctx.textAlign='center';ctx.fillText(ct.face,ct.pos.x,ct.pos.y+3)}
@@ -1723,12 +1724,12 @@ function courierInfo(){if(!runOn())return'';const home=CITY.id==='kg';let tx;
   if(run.stage==='return')tx=home?'Get the parcel back to Swift & Shifty.':'Head home to Kingsgate: ferry or toll road.';else tx=home?'Take the ferry or the toll road to Lumen City.':`Collect ${runItem()} from ${runPlace()}.`;
   return`<b>COURIER RUN</b>${tx}${run.stage==='return'?` <span class="t">${Math.round(run.cond)}% intact</span>`:''}`}
 const $cz=document.getElementById('casino'),$czCash=document.getElementById('czCash'),$czMsg=document.getElementById('czMsg');
-const fm=n=>'$'+Math.round(n).toLocaleString('en-GB');
+const fm=n=>Math.round(n).toLocaleString('en-GB')+' Kb';
 const pad2=n=>String(n).padStart(2,'0');
 const todayKey=()=>{const d=new Date();return`${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`};
 function czMsg(t,kind){$czMsg.textContent=t;$czMsg.className='cz-msg show '+(kind||'');clearTimeout(czMsg.t);czMsg.t=setTimeout(()=>$czMsg.classList.remove('show'),2800)}
 function czCash(){$czCash.textContent=fm(cash)}
-function stake(n){if(cash<n){czMsg('Not enough cash for that bet','bad');return false}cash-=n;czCash();return true}
+function stake(n){if(cash<n){czMsg('Not enough K-Buks for that bet','bad');return false}cash-=n;czCash();return true}
 function payout(n){cash+=n;czCash()}
 const CHIPS=[10,50,100,500,1000];
 function chipRow(id,sel,onPick){return`<div class="chips" id="${id}">${CHIPS.map(v=>`<button class="chip c${v}${v===sel?' on':''}" data-v="${v}" aria-label="Bet ${v}">${v>=1000?'1K':v}</button>`).join('')}</div>`}
@@ -1740,9 +1741,9 @@ function czShow(g){czGame=g;document.querySelectorAll('.cz-tabs button').forEach
 document.querySelectorAll('.cz-tabs button').forEach(b=>b.onclick=()=>czShow(b.dataset.g));
 
 /* ---- daily wheel ---- */
-const WHEEL=[{l:'$250',w:25,c:'#7a1f33',go(){cash+=250}},{l:'300 XP',w:15,c:'#1f4f7a',go(){gainXP(300)}},{l:'$500',w:22,c:'#0f5a3a',go(){cash+=500}},{l:'5 FREE SPINS',w:10,c:'#6b3fa0',go(){freeSpins+=5}},
-  {l:'$1,000',w:15,c:'#7a1f33',go(){cash+=1000}},{l:'GNOME TRACKER',w:4,c:'#8a6a1c',go(){let b=-1,bd=1e9;LOST.forEach((g2,i)=>{if(found.includes(i))return;const d=dist(g2.x,g2.y,P.x,P.y);if(d<bd){bd=d;b=i}});gnomeHint=b}},
-  {l:'$2,500',w:8,c:'#0f5a3a',go(){cash+=2500}},{l:'$10,000',w:1,c:'#c4932a',go(){cash+=10000}}];
+const WHEEL=[{l:'250 Kb',w:25,c:'#7a1f33',go(){cash+=250}},{l:'300 XP',w:15,c:'#1f4f7a',go(){gainXP(300)}},{l:'500 Kb',w:22,c:'#0f5a3a',go(){cash+=500}},{l:'5 FREE SPINS',w:10,c:'#6b3fa0',go(){freeSpins+=5}},
+  {l:'1,000 Kb',w:15,c:'#7a1f33',go(){cash+=1000}},{l:'GNOME TRACKER',w:4,c:'#8a6a1c',go(){let b=-1,bd=1e9;LOST.forEach((g2,i)=>{if(found.includes(i))return;const d=dist(g2.x,g2.y,P.x,P.y);if(d<bd){bd=d;b=i}});gnomeHint=b}},
+  {l:'2,500 Kb',w:8,c:'#0f5a3a',go(){cash+=2500}},{l:'10,000 Kb',w:1,c:'#c4932a',go(){cash+=10000}}];
 let wRot=0,wSpinning=false;
 const $wc=document.getElementById('wheelCv'),wx=$wc.getContext('2d');
 function czWheelDraw(){const W2=$wc.width,R=W2/2-8,seg=Math.PI*2/WHEEL.length;wx.clearRect(0,0,W2,W2);wx.save();wx.translate(W2/2,W2/2);
@@ -1768,7 +1769,7 @@ const SYM=[{k:'cherry',h:'🍒',w:30,p:3},{k:'lemon',h:'🍋',w:28,p:5},{k:'bell
 const SYM_TOT=SYM.reduce((a,b)=>a+b.w,0);
 const rollSym=()=>{let r=Math.random()*SYM_TOT;for(const s of SYM){if(r<s.w)return s;r-=s.w}return SYM[0]};
 let slotBet=50,slotSpinning=false;
-function slotsRender(){document.getElementById('jp').textContent=fm(jackpot);document.getElementById('fs').textContent=freeSpins?`${freeSpins} free spins left ($100 each)`:'';document.getElementById('slotSpin').textContent=freeSpins?'Free spin':'Spin'}
+function slotsRender(){document.getElementById('jp').textContent=fm(jackpot);document.getElementById('fs').textContent=freeSpins?`${freeSpins} free spins left (100 Kb each)`:'';document.getElementById('slotSpin').textContent=freeSpins?'Free spin':'Spin'}
 document.getElementById('slotSpin').onclick=()=>{if(slotSpinning)return;let b=slotBet,free=false;if(freeSpins>0){free=true;b=100;freeSpins--}else if(!stake(b))return;
   jackpot+=Math.round(b*.05);slotSpinning=true;const res=[rollSym(),rollSym(),rollSym()],reels=[...document.querySelectorAll('.reel')];slotsRender();
   reels.forEach(r=>{r.classList.add('spin');r.classList.remove('hit')});const t0=performance.now();
@@ -1867,7 +1868,7 @@ setInterval(cloudPush,20000);
 addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();cloudPush()}});
 
 /* ================= pause menu: review, support, contact, credits ================= */
-const GAME_VERSION='build 9 Nov c',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
+const GAME_VERSION='build 26 Nov',KOFI='https://ko-fi.com/kralnu90',CONTACT='hello@kralnugames.com';
 const FORM_ID='1FAIpQLSe__mPhU5YGi9um01BreqNND9mJwaaChi_4ZCp-7P5JcCJKcw';
 const FORM_FIELDS={rating:'entry.1904387170',liked:'entry.2084220988',change:'entry.1413261780',name:'entry.1767709403',version:'entry.1994593489'};
 function reviewParams(r){const q=new URLSearchParams();q.set(FORM_FIELDS.rating,String(r.rating));q.set(FORM_FIELDS.liked,r.liked);q.set(FORM_FIELDS.change,r.change);q.set(FORM_FIELDS.name,r.name);q.set(FORM_FIELDS.version,'Metropolitan Misadventure '+GAME_VERSION);return q}
@@ -2001,7 +2002,7 @@ function thud(v){if(!AC||muted||SET.sfx<=0)return;const n=AC.sampleRate*.18,b=AC
 const $snd=document.getElementById('snd');$snd.addEventListener('click',()=>{muted=!muted;$snd.textContent=muted?'♪ OFF':'♪ ON';$snd.setAttribute('aria-pressed',String(!muted));initAudio();if(AC&&AC.state==='suspended')AC.resume()});
 setInterval(()=>{if(started)save()},8000);
 let last=performance.now(),T0=last;
-let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 9 Nov b. Screenshot this for Claude.`;d.hidden=false}
+let errShown=false;function showErr(where,e){if(errShown)return;errShown=true;const st=String(e&&e.stack||'').split('\n').slice(0,2).join(' | ');const d=document.getElementById('errbox');d.textContent=`Something went wrong (${where}): ${e&&e.message||e}. ${st} · Build 26 Nov. Screenshot this for Claude.`;d.hidden=false}
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;try{if(started&&!paused)update(dt)}catch(e){showErr('update',e)}
   try{render((now-T0)/1000)}catch(e){showErr('render',e);try{ctx.setTransform(1,0,0,1,0,0)}catch(_){}}try{if(started)hud()}catch(e){showErr('hud',e)}music();
   bE.textContent=P.car?'EXIT':'ENTER';bB.textContent=P.car?'BRAKE':'PUNCH';
@@ -2041,7 +2042,7 @@ if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWor
 // Kralnu Games update check. When you push an update, change the game's version
 // AND version.json to the same new value; players then get a "new version" notice.
 (function(){
-  var NAME="Metropolitan Misadventure",BUILD="build 9 Nov c",CACHES=["mm-"],CHECK=true;
+  var NAME="Metropolitan Misadventure",BUILD="build 26 Nov",CACHES=["mm-"],CHECK=true;
   var path=location.pathname,dir=path.replace(/[^/]*$/,''),last=0,bar=null,busy=false;
   if(/^\?v=\d+$/.test(location.search)){try{history.replaceState(history.state,'',path+location.hash)}catch(e){}}
   function build(){return String(window.kgBuild!=null?window.kgBuild:BUILD)}
